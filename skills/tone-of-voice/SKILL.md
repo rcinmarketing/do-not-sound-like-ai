@@ -1,6 +1,6 @@
 ---
 name: tone-of-voice
-description: Write posts in the user's own voice, with no AI giveaways, and shape one idea into a draft for each platform (LinkedIn, X / Threads, Instagram, TikTok, YouTube Shorts, email or newsletter, short video script). Use when the user wants a post, caption or script that sounds like them, wants to set up or update their voice profile, or asks to make a draft sound less like AI.
+description: Write posts in the user's own voice, with no AI giveaways, and shape one idea into a draft for each platform (LinkedIn, X / Threads, Instagram, TikTok, YouTube Shorts, email, newsletter, short video script). Use when the user wants a post, caption or script that sounds like them, wants to set up or update their voice profile, or asks to make a draft sound less like AI.
 ---
 
 # Tone of Voice
@@ -45,6 +45,8 @@ Then write one draft of about 100–200 words in their voice (75–150 words, wr
 
 ## 3. Rules for every draft (always on, never ask)
 
+Apply these even when the user gave you no voice profile and only a one-line point. With no profile, write like a real person talking to a smart friend: first person, plain words, contractions, mixed sentence lengths, confident without hype.
+
 - Use only the ideas, stories, facts and opinions the user gave. Never invent statistics, quotes, names, clients or anecdotes. If a detail is missing, write `[ASK: what's missing]` in its place.
 - Start with the most specific thing they gave you. No openers about "today's world", trends or the landscape.
 - No AI giveaway words: delve, leverage, utilize, unlock, unleash, elevate, empower, foster, robust, seamless, game-changer, transformative, crucial, pivotal, landscape, realm, journey, tapestry, testament, synergy, supercharge.
@@ -63,7 +65,8 @@ Once they say where it's going, write one version per platform under a heading w
 - **Instagram:** first line is a hook under 125 characters. 50–150 words. Up to 5 relevant hashtags at the end.
 - **TikTok caption:** under 150 characters, adds to the video instead of repeating it. 3–5 specific hashtags.
 - **YouTube Shorts:** title under 60 characters, no clickbait. Description of 1–2 sentences, up to 3 hashtags.
-- **Email / newsletter:** 3 subject line options under 45 characters, preview text under 90 characters, a body written to one person with one link and one ask.
+- **Email:** "Subject:" with the best subject line (under 45 characters), 2 other options, and "Preview:" text under 90 characters. A 60–150 word body written to one person like a colleague would, opening with the point. One ask or link. Sign off with [Your name]. No "I hope this email finds you well", "I wanted to reach out" or "Don't hesitate to reach out".
+- **Newsletter:** subject and preview as above. A specific personal first line (no "Welcome back to another issue"), 200–400 words, one main idea, one ask or link at the end.
 - **Short video script:** hook said in the first 2 seconds, under 12 words. Written to be spoken. 30–60 seconds (75–150 words). Mark `[ON SCREEN: text]` where on-screen text helps.
 
 Before you hand anything over, reread it against section 3 and fix anything that slipped through.
