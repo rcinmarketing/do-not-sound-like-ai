@@ -71,14 +71,18 @@ Before you hand anything over, reread every line and rewrite any that breaks the
 
 Once they say where it's going, write one version per platform under a heading with just the platform name (`## LinkedIn`), with nothing else around it. Same idea, same voice, only the format changes. Each version must stand on its own.
 
-- **LinkedIn:** first 2 lines make people click "…see more". Paragraphs of 1–2 sentences. 120–250 words. Up to 3 hashtags at the very end, or none. End on a point of view.
-- **X / Threads:** under 280 characters, one idea, no hashtags. A thread only if asked: 4–7 posts, the first stands alone, no "🧵" or "1/".
-- **Instagram:** first line is a hook under 125 characters. 50–150 words. Up to 5 relevant hashtags at the end.
-- **TikTok caption:** under 150 characters, adds to the video instead of repeating it. 3–5 specific hashtags.
-- **YouTube Shorts:** title under 60 characters, no clickbait. Description of 1–2 sentences, up to 3 hashtags.
-- **Email:** "Subject:" with the best subject line (under 45 characters), 2 other options, and "Preview:" text under 90 characters. A 60–150 word body written to one person like a colleague would, opening with the point. One ask or link. Sign off with [Your name]. No "I hope this email finds you well", "I wanted to reach out" or "Don't hesitate to reach out".
-- **Newsletter:** subject and preview as above. A specific personal first line (no "Welcome back to another issue"), 200–400 words, one main idea, one ask or link at the end.
-- **Short video script:** hook said in the first 2 seconds, under 12 words. Written to be spoken. 30–60 seconds (75–150 words). Mark `[ON SCREEN: text]` where on-screen text helps.
+Follow each platform's best practices for captions, reach and search:
+
+- **LinkedIn:** the first 1–2 lines (under 140 characters) show before "…see more", so put the most specific or surprising line there. About 800–1,300 characters, paragraphs of 1–2 sentences with blank lines between. One clear idea with a real example. No external links in the post: if there's a link, write "Link in the first comment." and add a `First comment:` line with it. No engagement bait ("Comment YES", "Tag someone"). End on a clear point of view or one specific question people can answer from experience. 0–3 hashtags at the end.
+- **X / Threads:** one idea, under 280 characters so it works on both (aim for 100–250). Lead with the strongest words. No links in the post (add a `Reply with:` line instead). No hashtags on X, no "🧵" or "1/". A thread only if asked: 4–7 posts, the first stands alone.
+- **Instagram:** the first line (under 125 characters) shows before "…more" and has to hook alone. Use the words people would search for this topic in the first 2 sentences, since Instagram search reads captions. 80–200 words with line breaks. Give a reason to save or send it, and end with one natural ask to save it or send it to someone it would help. Say "Link in bio" instead of pasting links. 3–5 specific hashtags at the end.
+- **TikTok caption:** open with the keywords someone would search, in a natural sentence. 1–3 sentences (under 300 characters) that add to the video. End with one specific question from people's own experience. 3–5 mostly specific hashtags; never #fyp, #foryou or #viral.
+- **YouTube Shorts:** `Title:` under 60 characters (40 is better), main keyword first, matches what the video delivers, no clickbait or all caps. `Description:` 1–2 sentences with searchable keywords, then 2–3 hashtags.
+- **Email:** `Subject:` with the best subject line (under 45 characters), `Other options:` with 2 more, and `Preview:` under 90 characters. No ALL CAPS, "FREE", "!!!" or fake "Re:". A 60–150 word body written to one person like a colleague would, opening with the point. One ask or link with link text that says where it goes (never "click here"). Sign off with [Your name]. No "I hope this email finds you well", "I wanted to reach out" or "Don't hesitate to reach out".
+- **Newsletter:** subject and preview as above. A specific personal first line (no "Welcome back to another issue"), 200–400 skimmable words, one main idea, one ask or link at the end.
+- **Short video script:** hook said in the first 2 seconds, under 12 words, with `[ON SCREEN: text]` stating the topic for people watching muted. Deliver what the hook promised early, with no intro. Written to be spoken, easy to say in one breath. 30–45 seconds (75–120 words). End on the payoff or one clear ask; a last line that leads back into the first helps replays.
+
+Keep parts a platform needs (Subject, Preview, Title, Description, First comment) as plain lines inside its section, not as new headings.
 
 Before you hand anything over, reread every version against section 3 and fix anything that slipped through.
 

@@ -542,42 +542,57 @@ DRAFT:
 ${S.draft.trim() || "{{paste draft}}"}`;
 
 const PLATFORM_RULES = {
-  "LinkedIn": `LINKEDIN
-- First 2 lines must make someone click "…see more". Put the most specific, surprising line first. No "I'm excited to announce".
-- Short paragraphs (1–2 sentences), line break between them.
-- 120–250 words. Max 3 hashtags, at the very end, or none.
-- End with a point of view, not a question, unless a question is genuinely the point.`,
-  "X / Threads": `X / THREADS
-- Single post: under 280 characters, one idea, no hashtags.
-- Thread (only if I ask): first post must stand alone; 4–7 posts; no "🧵" or "1/".`,
+  "LinkedIn": `LINKEDIN POST
+- Hook: the first 1–2 lines (under 140 characters) are all people see before "…see more". Put the most specific, surprising or useful line there.
+- Length: about 800–1,300 characters. Paragraphs of 1–2 sentences with a blank line between them, so it reads easily on a phone.
+- Write for dwell time and real comments: one clear idea, told with a specific example or lesson from the piece.
+- No external links in the post, because LinkedIn shows posts with links to fewer people. If my notes include a link, end with "Link in the first comment." and put the link on its own line at the very end, starting "First comment:".
+- No engagement bait ("Comment YES", "Like if you agree", "Tag someone"). LinkedIn shows those posts to fewer people.
+- End on a clear point of view, or one specific question people could answer from their own experience.
+- 0–3 relevant hashtags at the very end. Never in the middle of a sentence.`,
+  "X / Threads": `X / THREADS POST
+- One idea, under 280 characters so the same post works on X and Threads. Aim for 100–250.
+- The first few words carry it: lead with the most specific or surprising part.
+- No links in the post (both apps show link posts to fewer people). If my notes include a link, add a line at the end starting "Reply with:" and the link.
+- No hashtags on X. Never "🧵", "1/" or "A thread:".
+- Only write a thread if I ask for one: 4–7 posts, the first one works on its own.`,
   "Instagram": `INSTAGRAM CAPTION
-- First line works as a hook in the preview (under 125 characters).
-- 50–150 words. Up to 5 relevant hashtags at the end.`,
+- The first line (under 125 characters) shows before "…more", so it has to hook on its own and say what the post is about.
+- Instagram search reads captions, so use the plain words people would actually search for this topic, worked naturally into the first 2 sentences.
+- 80–200 words, short paragraphs with line breaks.
+- Saves and shares count the most. Give people a reason to save or send it (a useful takeaway, a list they'll come back to), and end with one natural ask to save it or send it to someone it would help. No "Double tap if…".
+- If my notes include a link, say "Link in bio" instead of pasting it (links don't work in captions).
+- 3–5 specific, relevant hashtags at the very end, not 30 generic ones.`,
   "TikTok": `TIKTOK CAPTION
-- Under 150 characters. Adds to the video instead of repeating the first line.
-- 3–5 specific hashtags at the end.`,
+- TikTok search reads captions, so open with the keywords someone would type to find this video, in a natural sentence.
+- 1–3 sentences (under 300 characters). Add something to the video instead of repeating its first line.
+- End with one specific question that invites comments from people's own experience, not "Comment below".
+- 3–5 hashtags: mostly specific to the topic, at most one broad one. Never #fyp, #foryou or #viral.`,
   "YouTube Shorts": `YOUTUBE SHORTS
-- Title: under 60 characters, specific, no clickbait.
-- Description: 1–2 sentences, then up to 3 hashtags.`,
+- Start with "Title:" — under 60 characters (40 is better), the main keyword first, specific, and it must match what the video actually delivers. No clickbait, no all caps.
+- Then "Description:" — 1–2 sentences with the keywords people would search, then 2–3 hashtags (the first 3 show above the title).
+- If my notes include a link, put it at the end of the description.`,
   "Email": `EMAIL
-- Start with "Subject:" and the best subject line (under 45 characters, specific, no clickbait), then "Other options:" with 2 more.
+- Start with "Subject:" and the best subject line (under 45 characters, specific, no clickbait), then "Other options:" with 2 more. No ALL CAPS, no "FREE", no "!!!" or "Re:" tricks, which land emails in spam.
 - Then "Preview:" with preview text under 90 characters that adds to the subject instead of repeating it.
-- Body: written to one person, like an email from a colleague, not a campaign. 60–150 words. Short paragraphs.
+- Body: written to one person, like an email from a colleague, not a campaign. 60–150 words. Short paragraphs for phones.
 - Open with the point, not "I hope this email finds you well", "I wanted to reach out" or "Quick question".
-- One ask or one link, near the end. No "Don't hesitate to reach out" or "Let me know if you have any questions".
+- One ask or one link, near the end, with link text that says where it goes (never "click here"). No "Don't hesitate to reach out" or "Let me know if you have any questions".
 - Sign off with just a first name, written as [Your name].`,
   "Newsletter": `NEWSLETTER
-- Start with "Subject:" (under 45 characters, specific, no clickbait) and "Preview:" (under 90 characters).
+- Start with "Subject:" (under 45 characters, specific, no clickbait) and "Preview:" (under 90 characters, adds to the subject).
 - Open with a personal, specific first line. No "Welcome back to another issue" or "Happy Monday".
-- 200–400 words. Short sections with plain subheads only if they help.
-- One main idea, one ask or link at the end.`,
+- 200–400 words, skimmable: short paragraphs, plain subheads only if they help.
+- One main idea and one main ask or link at the end, with link text that says where it goes.`,
   "Short video script": `SHORT VIDEO SCRIPT (Reels / TikTok / Shorts)
-- Hook in the first 2 seconds, said out loud, under 12 words.
+- Hook in the first 2 seconds, said out loud, under 12 words, plus [ON SCREEN: text] that states the topic, since many people watch muted.
+- Deliver what the hook promised early, so people keep watching. Cut any intro ("Hey guys", "In this video").
 - Written to be spoken: contractions, sentences easy to say in one breath, no lists.
-- 30–60 seconds (75–150 words). Mark [ON SCREEN: text] where on-screen text helps.`
+- 30–45 seconds (75–120 words). Mark [ON SCREEN: text] where on-screen text helps.
+- End on the payoff or one clear ask. A last line that leads back into the first helps replays.`
 };
 
-const P4 = () => `Turn the piece below into versions for the platforms I list. Keep my voice: same opinions, same words I'd use, same humor level. Only the format changes.
+const P4 = () => `Turn the piece below into a draft for each platform I list. Keep my voice: same opinions, same words I'd use, same humor level. Shape each one to that platform's current best practices for captions, reach and search, following the platform rules below.
 
 MY VOICE PROFILE:
 ${profileBlock()}
@@ -594,6 +609,7 @@ ${S.platforms.map(p => PLATFORM_RULES[p]).join("\n\n")}
 Rules for every version:
 - Don't add facts, numbers or stories that aren't in the original.
 - Each version should work on its own; don't write "as I said on LinkedIn".
+- Keep any parts a platform needs (Subject, Preview, Title, Description, First comment) inside that platform's section as plain lines, not as new headings.
 
 Return each version under a heading with its platform name and its word or character count.`;
 
@@ -733,7 +749,7 @@ const NO_SLOP = `It must read like a person wrote it, not AI. These strict writi
 - Banned words: delve, leverage, testament, game-changer, seamless, holistic, landscape, ultimately, foster, catalyze, elevate, amplify, maximize, empower, enable, revolutionize, transform, transformative, disrupt, unleash, unlock, synergy, synchronize, cutting-edge, state-of-the-art, next-gen, navigate, underscore, illuminate, evince, juxtapose, elucidate, pivotal, paramount, critical, crucial, vital, essential, beacon, tapestry, mosaic, symbiotic, furthermore, moreover. Use plain words instead: handle, deal with, show, explain, important, also, and.
 - Banned phrases: "here's the thing", "in addition", "it is worth noting that", "it is important to remember", "with that said", "that being said", "in essence", "simply put", "to put it bluntly", "in today's fast-paced world", "let's dive in", "in conclusion", "at the end of the day", "let me know in the comments", "I'm excited to announce", "I hope this email finds you well", "don't hesitate to reach out".
 - No openers about trends or "today's world". Start with the most specific thing I gave you.
-- No emojis as bullet points, no hashtag stacks, no bold text for emphasis, no more than one exclamation mark, no em-dash in every other sentence, no closing question unless my point is a question.
+- No emojis as bullet points, no hashtag stacks, no bold text for emphasis, no more than one exclamation mark, no em-dash in every other sentence, no closing question unless my point is a question or the platform rules ask for one.
 - Before you answer, reread every line and rewrite any that breaks these rules.`;
 const notesBlock = () => has(S.w.extra) ? `ADDITIONAL NOTES (follow these; include exactly the links, handles and details given here, and if a note asks for something without the details, write [ASK: what's missing] instead of making it up):
 ${S.w.extra.trim().slice(0, 4000)}
