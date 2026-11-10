@@ -25,9 +25,9 @@ Tell Claude how you sound once, then just say what point you want to make. Claud
 
 Then ask: *"Write a post in my voice: I stopped letting AI write my posts and my comments doubled."*
 
-## Or use Tone of Voice Studio
+## Or use Sounds Like Me
 
-**[Tone of Voice Studio](index.html)** walks you through it in four clicks:
+**[Sounds Like Me](index.html)** walks you through it in four clicks:
 
 1. **How you sound.** Pick from a few lists, or add your own words. Optional: paste things you've written and video transcripts.
 2. **What you want to say.** Just your point.
@@ -78,4 +78,4 @@ Works with any modern chat AI. Each prompt has `{{placeholders}}`: replace them,
 - [Content and Video Studio](https://github.com/rcinmarketing/content-planning-and-editing): plan and edit short-form videos in one browser tab.
 - [AI UI/UX Prompts](https://github.com/rcinmarketing/ai-ui-ux-prompts): make AI-built interfaces stop looking AI-built.
 
-Made by Rizza Carla Ramos ([RC in Marketing](https://github.com/rcinmarketing)). Free to use at work, adapt and share under the [MIT License with Attribution Requirement](LICENSE): any copy or version of Tone of Voice Studio must keep the credit footer visible, and shared copies of the prompts or skill must credit RC in Marketing with a link back to this repo.
+Made by Rizza Carla Ramos ([RC in Marketing](https://github.com/rcinmarketing)). Free to use at work, adapt and share under the [MIT License with Attribution Requirement](LICENSE): any copy or version of Sounds Like Me must keep the credit footer visible, and shared copies of the prompts or skill must credit RC in Marketing with a link back to this repo.

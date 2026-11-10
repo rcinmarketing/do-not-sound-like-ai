@@ -9,7 +9,7 @@ Turns the user's idea into drafts that sound like them, not like AI. The user on
 
 ## 1. Know how they sound
 
-Look for a saved voice profile first: a file called `my-tone-of-voice.md` (downloaded from Tone of Voice Studio), a "Voice profile" in the project or conversation, or one the user pastes.
+Look for a saved voice profile first: a file called `my-tone-of-voice.md` (downloaded from Sounds Like Me), a "Voice profile" in the project or conversation, or one the user pastes.
 
 If there's none, ask just these, in one message, and offer examples they can pick from:
 
@@ -88,6 +88,6 @@ Once the user approves a draft, treat it as final: keep their wording, phrases a
 
 Before you hand anything over, reread every version against section 3 and fix anything that slipped through.
 
-## Tone of Voice Studio
+## Sounds Like Me
 
-For a guided, click-through version of this, the user can open Tone of Voice Studio (`index.html` in this repo). Opened inside Claude, it writes the drafts with their own Claude, with no API key.
+For a guided, click-through version of this, the user can open Sounds Like Me (`index.html` in this repo). Opened inside Claude, it writes the drafts with their own Claude, with no API key.
