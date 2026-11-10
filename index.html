@@ -86,6 +86,24 @@ input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 
 .plat{font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--panel3);color:var(--muted);white-space:nowrap}
 .plat.bad{background:rgba(208,33,63,.1);color:var(--danger)}
 .linkrow textarea{margin-top:8px;min-height:80px}
+.pick-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 14px}
+.pick-grid .wide{grid-column:1 / -1}
+.ms{position:relative}
+.ms-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:14.5px;min-height:40px}
+.ms-btn:hover{border-color:#c3cad8}
+.ms-btn:focus-visible{outline:2px solid var(--blue);outline-offset:1px}
+.ms-btn[aria-expanded="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+.ms-btn .ms-v{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ms-btn .ms-v.ph{color:var(--faint)}
+.ms-btn .car{color:var(--faint);flex:none;font-size:12px}
+.ms-pop{position:absolute;z-index:8;left:0;right:0;top:calc(100% + 4px);background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(20,26,40,.16);padding:6px;max-height:300px;overflow:auto}
+.ms-opt{display:flex;align-items:center;gap:9px;margin:0;padding:8px 9px;border-radius:7px;font-size:14px;font-weight:400;color:var(--text);cursor:pointer}
+.ms-opt:hover{background:var(--panel2)}
+.ms-opt input{accent-color:var(--accent);width:16px;height:16px;margin:0;flex:none}
+.ms-add{margin-top:4px;font-size:13.5px!important;padding:7px 9px!important}
+.ms-sel{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.ms-sel span{font-size:12px;padding:2px 8px;border-radius:20px;background:var(--accent-bg);color:var(--accent-2)}
+#pickPreview{max-height:320px;font-size:13.5px}
 .meta{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--faint);margin-top:5px;font-variant-numeric:tabular-nums}
 
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
@@ -152,6 +170,10 @@ dialog h3{font-size:16px;font-weight:650;margin-bottom:4px}
 footer.credit{grid-area:foot;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px;border-top:1px solid var(--line);background:var(--panel);font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden}
 footer.credit a{color:var(--text);font-weight:600;text-decoration:none}
 footer.credit a:hover{text-decoration:underline}
+footer.credit .follow{display:flex;align-items:center;gap:10px}
+footer.credit .follow b{color:var(--brand);letter-spacing:.06em;text-transform:uppercase;font-size:11px;font-weight:800}
+footer.credit .follow a{display:flex;color:var(--muted);transition:color .15s}
+footer.credit .follow a:hover{color:var(--pink)}
 
 @media (max-width:980px){.checker{grid-template-columns:1fr}}
 @media (max-width:860px){
@@ -167,7 +189,7 @@ footer.credit a:hover{text-decoration:underline}
   footer.credit{white-space:normal;padding:8px 14px;flex-wrap:wrap}
 }
 @media (max-width:620px){
-  .row{grid-template-columns:1fr}
+  .row,.pick-grid{grid-template-columns:1fr}
   .brand span,#progressText{display:none}
   .appbar .btn.primary{padding:6px 11px;font-size:13px;min-height:32px}
 }
@@ -178,7 +200,7 @@ footer.credit a:hover{text-decoration:underline}
 <header class="appbar">
   <div class="brand"><i>RC</i><span>Tone of Voice Studio</span></div>
   <div class="spacer"></div>
-  <div class="prog" aria-live="polite"><span id="progressText">0 of 5 steps done</span>
+  <div class="prog" aria-live="polite"><span id="progressText">0 of 4 steps done</span>
     <div class="bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progressBar"><i></i></div></div>
   <button class="btn" id="importVS">Import from Video Studio</button>
   <button class="btn primary" id="exportBtn">Download voice kit</button>
@@ -186,13 +208,12 @@ footer.credit a:hover{text-decoration:underline}
 
 <nav class="rail" aria-label="Steps">
   <div class="pane-h">Steps</div>
-  <button class="step-btn" data-go="1"><span class="n"><span>1</span></span><span class="t">Voice profile<span class="s">Once, 10 min</span></span></button>
-  <button class="step-btn" data-go="2"><span class="n"><span>2</span></span><span class="t">Write in your voice<span class="s">Every post</span></span></button>
-  <button class="step-btn" data-go="3"><span class="n"><span>3</span></span><span class="t">Strip the AI tells<span class="s">1 min</span></span></button>
-  <button class="step-btn" data-go="4"><span class="n"><span>4</span></span><span class="t">Adapt per platform<span class="s">Optional</span></span></button>
-  <button class="step-btn" data-go="5"><span class="n"><span>5</span></span><span class="t">Score it<span class="s">Before you post</span></span></button>
+  <button class="step-btn" data-go="1"><span class="n"><span>1</span></span><span class="t">How you sound<span class="s">Once</span></span></button>
+  <button class="step-btn" data-go="2"><span class="n"><span>2</span></span><span class="t">What to say<span class="s">Every post</span></span></button>
+  <button class="step-btn" data-go="3"><span class="n"><span>3</span></span><span class="t">Your draft<span class="s">And where it goes</span></span></button>
+  <button class="step-btn" data-go="4"><span class="n"><span>4</span></span><span class="t">Platform drafts<span class="s">Ready to post</span></span></button>
   <div class="rail-foot">
-    <p>Make AI write like you. Each step fills in a prompt with your own words: copy it into Claude, ChatGPT or Gemini, then paste the answer back. Saved in this browser only.</p>
+    <p>Make AI write like you. Your profile and drafts are saved in this browser. Drafts are written by your own Claude, no API key needed.</p>
     <button class="btn small" id="newPostBtn">Start a new post</button>
     <button class="btn small ghost danger" id="resetBtn">Erase everything</button>
   </div>
@@ -200,20 +221,39 @@ footer.credit a:hover{text-decoration:underline}
 
 <main class="main"><div class="content">
 <div class="linkbar" id="linkbar">
-  <span class="lbl" id="linkInfo">Working on a video? Bring its script over from <b>Content and Video Studio</b>.</span>
+  <span class="lbl" id="linkInfo">Working on a video? Bring its script over from <a href="https://github.com/rcinmarketing/content-planning-and-editing" target="_blank" rel="noopener"><b>Content and Video Studio</b></a>.</span>
   <button class="btn small" id="sendVS" hidden>Send to Video Studio</button>
   <button class="btn small ghost" id="unlinkVS" hidden>Unlink</button>
 </div>
 
     <!-- STEP 1 -->
     <section class="panel" data-step="1" aria-labelledby="h1">
-      <div class="panel-head"><span class="n c1">STEP 1 OF 5</span></div>
+      <div class="panel-head"><span class="n c1">STEP 1 OF 4</span></div>
       <h2 id="h1">Build your voice profile</h2>
-      <p class="lede">Paste 3–5 things you've written and are proud of, and add links to past videos that sound like you. About 800 words in total. The AI turns them into rules and examples you'll reuse every time you write.</p>
+      <p class="lede">Tell it how you sound. Add things you've written if you want it even closer. It's saved in this browser and used for every draft.</p>
 
       <div class="block">
-        <h3><span class="tag">A</span> Your writing samples</h3>
-        <p class="hint">Pick pieces that weren't heavily edited by someone else or by AI. Mixing types helps.</p>
+        <h3><span class="tag">A</span> How you sound</h3>
+        <div id="pickMode">
+          <p class="hint">Just tell it how you sound. Tick what fits, or add your own. Claude takes care of the rest, including removing anything that sounds like AI.</p>
+          <div class="pick-grid" id="pickGrid"></div>
+          <div class="note" id="pickClash" hidden>You've edited your profile as text, so your picks aren't applied. <button class="btn small ghost" id="usePicks" style="padding:0 4px;min-height:0">Replace it with my picks</button></div>
+          <label for="pickPreview" style="margin-top:16px">Your voice profile, written from your picks</label>
+          <div class="preview" id="pickPreview" tabindex="0"></div>
+          <div class="btns"><button class="btn small" id="editPicked">Edit as text</button></div>
+        </div>
+        <div id="pasteMode" hidden>
+          <p class="hint">Write how you sound in your own words, or paste a voice profile you already have.</p>
+          <textarea class="tall" data-bind="profile" aria-label="Voice profile" placeholder="e.g. I sound like a friend over coffee: warm, direct, a bit nerdy…"></textarea>
+          <div class="btns">
+            <button class="btn small" data-pmode="pick">Back to picking from lists</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3><span class="tag">B</span> Things you've written <span class="opt-h">optional</span></h3>
+        <p class="hint">Paste a few posts or emails you're proud of. Claude reads them to match your voice even more closely.</p>
         <div id="samples"></div>
         <div class="meta"><span id="sampleWords">0 words</span><span id="sampleGoal">Goal: 800+</span></div>
         <div class="btns">
@@ -222,205 +262,90 @@ footer.credit a:hover{text-decoration:underline}
       </div>
 
       <div class="block">
-        <h3><span class="tag">B</span> Links to your past video posts <span class="opt-h">optional</span></h3>
-        <p class="hint">Videos show how you <em>talk</em>, which is often closer to your real voice than how you write. Most AI chats can't open LinkedIn, TikTok or Instagram links or watch videos, so also paste what you said: the transcript or auto-captions, plus the caption you posted.</p>
+        <h3><span class="tag">C</span> Your past video posts <span class="opt-h">optional</span></h3>
+        <p class="hint">Videos show how you <em>talk</em>, which is often closer to your real voice than how you write. Claude can't open social links or watch videos, so paste what you said too: the transcript or auto-captions.</p>
         <div id="links"></div>
         <div class="btns">
           <button class="btn small" id="addLink">+ Add a link</button>
         </div>
       </div>
 
-      <div class="block">
-        <h3><span class="tag">C</span> Copy the prompt into your AI</h3>
-        <p class="hint">Your samples and links are already inside the prompt.</p>
-        <div class="btns">
-          <button class="btn primary" data-copy="p1">Copy prompt</button>
-          <a class="btn small ghost" href="prompts/01-build-your-voice-profile.md" target="_blank" rel="noopener">See the prompt</a>
-        </div>
-        <div class="note" id="p1note" hidden></div>
-      </div>
-
-      <div class="block">
-        <h3><span class="tag">D</span> Paste your voice profile back here</h3>
-        <p class="hint">Read it and correct anything that isn't you. It's saved in this browser and added to every prompt after this. Tip: also put it in a Claude Project, Custom GPT or Gem.</p>
-        <textarea class="tall" data-bind="profile" aria-label="Voice profile" placeholder="Paste the voice profile your AI wrote…"></textarea>
-        <div class="btns">
-          <button class="btn small ghost" id="useTemplate">Or fill in the template by hand</button>
-        </div>
-      </div>
-
-      <div class="btns"><button class="btn primary" data-next="2">Next: write in your voice →</button></div>
+      <div class="btns"><button class="btn" id="dlVoice">Download voice kit</button><button class="btn primary" data-next="2">Next: what do you want to say? →</button></div>
     </section>
 
     <!-- STEP 2 -->
     <section class="panel" data-step="2" aria-labelledby="h2" hidden>
-      <div class="panel-head"><span class="n c2">STEP 2 OF 5</span></div>
-      <h2 id="h2">Write in your voice</h2>
-      <p class="lede">Start from your own messy notes, not a topic. Notes carry your opinions; a topic alone gets you the internet's average opinion.</p>
-
-      <div class="tabs" role="tablist" aria-label="Mode">
-        <button role="tab" id="tabNotes" aria-selected="true" data-mode="notes">Write from notes</button>
-        <button role="tab" id="tabRewrite" aria-selected="false" data-mode="rewrite">Rewrite a draft</button>
-      </div>
-
-      <div class="block" id="modeNotes">
-        <h3><span class="tag">A</span> What are you writing?</h3>
-        <div class="row">
-          <div><label for="fFormat">Format</label><input type="text" id="fFormat" data-bind="w.format" placeholder="LinkedIn post"></div>
-          <div><label for="fLength">Length</label><input type="text" id="fLength" data-bind="w.length" placeholder="Under 200 words"></div>
-          <div><label for="fAudience">Audience</label><input type="text" id="fAudience" data-bind="w.audience" placeholder="Marketers in tech, 3–8 years in"></div>
-          <div><label for="fGoal">Goal</label><input type="text" id="fGoal" data-bind="w.goal" placeholder="They rethink how they use AI for writing"></div>
-        </div>
-        <label for="fNotes">Your notes <span class="opt">(messy is fine: bullets, a voice-note transcript)</span></label>
-        <textarea id="fNotes" class="tall" data-bind="w.notes" placeholder="- the week I said yes to four launches&#10;- what I'd do differently&#10;- the one rule I follow now"></textarea>
-      </div>
-
-      <div class="block" id="modeRewrite" hidden>
-        <h3><span class="tag">A</span> The draft to rewrite</h3>
-        <p class="hint">Written by AI, by a colleague, or by you on a tired day. Facts and numbers stay; only the voice changes.</p>
-        <textarea class="tall" data-bind="w.source" aria-label="Draft to rewrite" placeholder="Paste the draft…"></textarea>
-      </div>
+      <div class="panel-head"><span class="n">Step 2 of 4</span></div>
+      <h2 id="h2">What do you want to say?</h2>
+      <p class="lede">Just the point you want to make. A sentence or a few messy bullets is enough. Claude writes it in your voice, then shapes it for each platform.</p>
 
       <div class="block">
-        <h3><span class="tag">B</span> Copy the prompt into your AI</h3>
-        <div class="btns">
-          <button class="btn primary" data-copy="p2">Copy prompt</button>
-          <a class="btn small ghost" href="prompts/02-write-in-your-voice.md" target="_blank" rel="noopener">See the prompt</a>
-        </div>
-        <div class="note" id="p2note" hidden></div>
+        <label for="fPoint" style="margin-top:0">Your point</label>
+        <textarea id="fPoint" class="tall" data-bind="w.point" placeholder="e.g. I stopped letting AI write my posts. My comments doubled, because people could finally hear me in them."></textarea>
+        <details id="srcBox" style="margin-top:14px">
+          <summary class="hint" style="cursor:pointer;margin:0">Already have a draft or script? Add it (optional)</summary>
+          <textarea data-bind="w.source" aria-label="Existing draft" style="margin-top:8px" placeholder="Paste it here and Claude rewrites it in your voice, keeping your facts."></textarea>
+        </details>
       </div>
 
-      <div class="block">
-        <h3><span class="tag">C</span> Paste the draft it wrote</h3>
-        <p class="hint">Fill in any [ASK: …] markers yourself. That's where the AI would otherwise have made something up.</p>
-        <textarea class="tall" data-bind="draft" aria-label="Your draft" placeholder="Paste the draft…"></textarea>
-      </div>
-
-      <div class="btns"><button class="btn" data-next="1">← Back</button><button class="btn primary" data-next="3">Next: strip the AI tells →</button></div>
+      <p class="hint out-claude" style="margin-top:14px">Runs on your own Claude, no API key. “Write my draft” opens a new Claude chat with everything filled in: paste Claude's reply into the next step. Open Tone Studio inside Claude and it writes straight into the page.</p>
+      <div class="note bad" id="genErr" hidden></div>
+      <div class="btns"><button class="btn" data-next="1">← Back</button><button class="btn primary" id="genDraft">Write my draft →</button></div>
     </section>
 
     <!-- STEP 3 -->
     <section class="panel" data-step="3" aria-labelledby="h3" hidden>
-      <div class="panel-head"><span class="n c3">STEP 3 OF 5</span></div>
-      <h2 id="h3">Strip the AI tells</h2>
-      <p class="lede">A quick check right here first: giveaway words are highlighted (hover one to see what to say instead), and giveaway patterns are listed. Then let your AI do a proper edit.</p>
+      <div class="panel-head"><span class="n">Step 3 of 4</span></div>
+      <h2 id="h3">Your draft</h2>
+      <p class="lede">Your idea, written in your voice. Edit anything you like, then pick where it will be posted.</p>
 
       <div class="block">
-        <div class="draft-head"><h3><span class="tag">A</span> Instant check</h3><button class="btn small" id="editDraft">Edit draft</button></div>
-        <div class="checker">
-          <div>
-            <div class="preview" id="preview" aria-live="polite"></div>
-            <textarea class="tall" id="draftEditor" data-bind="draft" aria-label="Edit draft" hidden></textarea>
-          </div>
-          <div class="scorebox">
-            <div class="score-l">Human score</div>
-            <div class="score" id="score">–<small>/100</small></div>
-            <div class="verdict" id="verdict"></div>
-            <ul class="issues" id="issues"></ul>
-            <p class="disclaim">A quick pattern check, not a detector. It can't judge whether it sounds like <em>you</em>; step 5 does that.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="block">
-        <h3><span class="tag">B</span> Copy the edit prompt into your AI</h3>
+        <div class="draft-head"><h3>Draft</h3><span class="hint" id="genStatus" style="margin:0" aria-live="polite"></span></div>
+        <textarea class="tall" id="draftEditor" data-bind="draft" aria-label="Your draft" style="min-height:260px" placeholder="Your draft appears here. Writing in a Claude chat? Paste its reply here."></textarea>
         <div class="btns">
-          <button class="btn primary" data-copy="p3">Copy prompt</button>
-          <a class="btn small ghost" href="prompts/03-strip-ai-tells.md" target="_blank" rel="noopener">See the prompt</a>
-          <a class="btn small ghost" href="ai-tells.md" target="_blank" rel="noopener">Full list of tells</a>
+          <button class="btn" id="regen">Write another version</button>
+          <button class="btn" id="copyDraft">Copy</button>
+          <button class="btn small ghost" id="undoEdited" hidden>Undo last change</button>
         </div>
-        <div class="note" id="p3note" hidden></div>
+        <div class="note bad" id="genErr3" hidden></div>
       </div>
 
       <div class="block">
-        <h3><span class="tag">C</span> Paste the edited draft</h3>
-        <p class="hint">It replaces your draft and the check above runs again. Your previous version is kept, so you can undo.</p>
-        <textarea data-bind="pasteEdited" aria-label="Edited draft" placeholder="Paste the edited draft (just the text, not the table)…"></textarea>
-        <div class="btns">
-          <button class="btn" id="applyEdited">Use this version</button>
-          <button class="btn small ghost" id="undoEdited" hidden>Undo: go back to the previous version</button>
-        </div>
+        <h3>Where will it be posted?</h3>
+        <p class="hint">Pick one or more. Claude shapes your idea for each: length, hook, line breaks and hashtags.</p>
+        <div class="chips" id="platforms"></div>
       </div>
 
-      <div class="btns"><button class="btn" data-next="2">← Back</button><button class="btn primary" data-next="4">Next: adapt per platform →</button></div>
+      <div class="note bad" id="genErr4" hidden></div>
+      <div class="btns"><button class="btn" data-next="2">← Back</button><button class="btn primary" id="genAdapt">Write a draft for each platform →</button></div>
     </section>
 
     <!-- STEP 4 -->
     <section class="panel" data-step="4" aria-labelledby="h4" hidden>
-      <div class="panel-head"><span class="n c4">STEP 4 OF 5</span></div>
-      <h2 id="h4">Adapt it per platform</h2>
-      <p class="lede">Same voice, different format. Pick where this is going. Skip this step if it's for one place only.</p>
+      <div class="panel-head"><span class="n">Step 4 of 4</span></div>
+      <h2 id="h4">Your drafts for each platform</h2>
+      <p class="lede">Same idea, same voice, shaped for each platform. Edit, copy and post.</p>
 
-      <div class="block">
-        <h3><span class="tag">A</span> Where is it going?</h3>
-        <div class="chips" id="platforms"></div>
+      <div id="versions"></div>
+      <details id="rawBox" style="margin-top:14px">
+        <summary class="hint" style="cursor:pointer;margin:0">Wrote them in a Claude chat? Paste the reply here</summary>
+        <textarea class="tall" id="adapted" data-bind="adapted" aria-label="Platform drafts" style="margin-top:8px" placeholder="Paste Claude's reply. Each platform under its own heading, e.g. ## LinkedIn"></textarea>
+      </details>
+      <p class="hint" id="capFound" style="margin-top:8px"></p>
+
+      <div class="btns">
+        <button class="btn" data-next="3">← Back</button>
+        <button class="btn" id="regenAdapt">Write them again</button>
+        <button class="btn" id="sendVS2">Send to Video Studio</button>
+        <button class="btn primary" id="newPost2">Start a new post</button>
       </div>
-
-      <div class="block">
-        <h3><span class="tag">B</span> Copy the prompt into your AI</h3>
-        <div class="btns">
-          <button class="btn primary" data-copy="p4">Copy prompt</button>
-          <a class="btn small ghost" href="prompts/04-platform-adapters.md" target="_blank" rel="noopener">See the prompt</a>
-        </div>
-        <div class="note" id="p4note" hidden></div>
-      </div>
-
-      <div class="block">
-        <h3><span class="tag">C</span> Paste the versions here to keep them</h3>
-        <textarea class="tall" data-bind="adapted" aria-label="Platform versions" placeholder="Paste the platform versions…"></textarea>
-        <p class="hint" id="capFound" style="margin-top:8px"></p>
-      </div>
-
-      <div class="btns"><button class="btn" data-next="3">← Back</button><button class="btn" id="skip4">Skip</button><button class="btn primary" data-next="5">Next: score it →</button></div>
-    </section>
-
-    <!-- STEP 5 -->
-    <section class="panel" data-step="5" aria-labelledby="h5" hidden>
-      <div class="panel-head"><span class="n c5">STEP 5 OF 5</span></div>
-      <h2 id="h5">Score it before you post</h2>
-      <p class="lede">A strict second opinion against <em>your</em> profile: does it sound like you, does it sound human, is it specific? 8+ means post it.</p>
-
-      <div class="block">
-        <h3><span class="tag">A</span> Copy the scorecard prompt into your AI</h3>
-        <p class="hint">It checks your current draft from step 3.</p>
-        <div class="btns">
-          <button class="btn primary" data-copy="p5">Copy prompt</button>
-          <a class="btn small ghost" href="prompts/05-voice-scorecard.md" target="_blank" rel="noopener">See the prompt</a>
-        </div>
-        <div class="note" id="p5note" hidden></div>
-      </div>
-
-      <div class="block">
-        <h3><span class="tag">B</span> What did it score?</h3>
-        <div class="row">
-          <div>
-            <label for="overall">Overall score (0–10)</label>
-            <input type="text" id="overall" inputmode="decimal" data-bind="overall" placeholder="e.g. 8.2">
-          </div>
-          <div><label>What to do next</label><div class="note" id="overallNote" style="margin:0">Enter the overall score to see what to do next.</div></div>
-        </div>
-        <label for="scoreOut">The full scorecard <span class="opt">(optional, to keep the fixes)</span></label>
-        <textarea id="scoreOut" data-bind="scoreOut" placeholder="Paste the scorecard…"></textarea>
-      </div>
-
-      <div class="finish" id="finish" hidden>
-        <h3>Ready to post.</h3>
-        <p style="margin:6px 0 12px">Copy your final draft, post it, then start the next one. Your voice profile stays saved.</p>
-        <div class="btns" style="margin-top:0">
-          <button class="btn primary" id="copyFinal">Copy final draft</button>
-          <button class="btn" id="sendVS2">Send to Video Studio</button>
-          <button class="btn" id="newPost2">Start a new post</button>
-        </div>
-      </div>
-
-      <div class="btns"><button class="btn" data-next="4">← Back</button></div>
     </section>
 
 </div></main>
 
 <footer class="credit">
-  <span>Saved in this browser only. Nothing is uploaded.</span>
-  <span>Made by <a href="https://github.com/rcinmarketing">Rizza Carla Ramos</a> · <a href="https://github.com/rcinmarketing/ai-tone-of-voice-prompts">GitHub</a> · MIT</span>
+  <span>© 2026 Tone of Voice Studio · Made by <a href="https://www.linkedin.com/in/rizzacarlaramos/" target="_blank" rel="noopener noreferrer">Rizza Carla Ramos</a> · <a href="https://github.com/rcinmarketing" target="_blank" rel="noopener noreferrer">GitHub</a></span>
+  <span class="follow"><b>Follow RC in Marketing</b><a href="https://www.linkedin.com/in/rizzacarlaramos/" target="_blank" rel="noopener noreferrer" title="RC in Marketing on LinkedIn" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a href="https://www.instagram.com/rcinmarketing/" target="_blank" rel="noopener noreferrer" title="RC in Marketing on Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.6" fill="none" stroke="currentColor" stroke-width="2.3"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2.3"/><circle cx="17.6" cy="6.4" r="1.45"/></svg></a><a href="https://www.tiktok.com/@rcinmarketing" target="_blank" rel="noopener noreferrer" title="RC in Marketing on TikTok" aria-label="TikTok"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a><a href="https://www.youtube.com/channel/UCaY9J26Afom5AF2o4UbYdTw" target="_blank" rel="noopener noreferrer" title="RC in Marketing on YouTube" aria-label="YouTube"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.87.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg></a></span>
 </footer>
 
 <dialog id="pasteDlg" aria-labelledby="pasteH">
@@ -443,16 +368,16 @@ const blank = () => ({
   step: 1,
   samples: ["", "", ""],
   links: [],
-  profile: "",
-  w: { mode: "notes", format: "", length: "", audience: "", goal: "", notes: "", source: "" },
-  draft: "", prevDraft: "", pasteEdited: "",
+  profile: "", profileMode: "pick", profileFrom: "", pick: {},
+  w: { point: "", format: "LinkedIn post", length: "Medium (100–200 words)", audience: "", source: "" },
+  draft: "", prevDraft: "",
   stripped: false,
   platforms: ["LinkedIn"], adapted: "", skipped4: false,
   overall: "", scoreOut: "",
   link: null
 });
 let S = blank();
-try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); S.w = Object.assign(blank().w, S.w); S.links = (Array.isArray(S.links) ? S.links : []).filter(l => l && typeof l === "object").map(l => ({ url: String(l.url || ""), text: String(l.text || "") })).slice(0, 10); } catch (e) {}
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); S.w = Object.assign(blank().w, S.w); if (!S.w.point && S.w.notes) S.w.point = S.w.notes; if (!S.pick || typeof S.pick !== "object") S.pick = {}; if (has(S.profile) && !S.profileFrom) { S.profileFrom = "text"; S.profileMode = "paste"; } S.links = (Array.isArray(S.links) ? S.links : []).filter(l => l && typeof l === "object").map(l => ({ url: String(l.url || ""), text: String(l.text || "") })).slice(0, 10); } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -720,18 +645,128 @@ const checks = {
     if (n + k < 3 || w < 800) return ["warn", `Copied with ${what} (${w} words). The profile gets much better with 3+ pieces and 800+ words.`];
     return ["ok", `Copied with ${what} (${w} words). Paste it into your AI, then paste the profile into box D.`];
   },
-  p2: () => {
-    const notes = S.w.mode === "notes";
-    if (notes && !has(S.w.notes)) return ["bad", "Add your notes first. That's what makes the draft yours."];
-    if (!notes && !has(S.w.source)) return ["bad", "Paste the draft you want rewritten first."];
-    if (!has(S.profile)) return ["warn", "Copied, but without a voice profile (step 1), so the AI will guess your voice. Paste the result into box C."];
-    return ["ok", "Copied with your voice profile. Paste the result into box C."];
-  },
-  p3: () => has(S.draft) ? ["ok", "Copied with your current draft. Paste only the edited draft back into box C."] : ["bad", "There's no draft yet. Paste one in step 2, or click “Edit draft” above."],
   p4: () => !has(S.draft) ? ["bad", "There's no draft yet. Add one in step 2."] : !S.platforms.length ? ["bad", "Pick at least one platform."] : ["ok", `Copied for ${S.platforms.join(", ")}.`],
   p5: () => !has(S.draft) ? ["bad", "There's no draft yet. Add one in step 2."] : !has(S.profile) ? ["warn", "Copied, but without a voice profile the “sounds like me” score is a guess."] : ["ok", "Copied. Enter the overall score below."]
 };
-const builders = { p1: P1, p2: () => S.w.mode === "notes" ? P2notes() : P2rewrite(), p3: P3, p4: P4, p5: P5 };
+const builders = { p1: P1, p4: P4, p5: P5 };
+
+/* ---------- Claude ----------
+   Runs on the person's own Claude plan, no API key:
+   - opened inside Claude (as an artifact), Claude writes straight into the page;
+   - anywhere else, the prompt opens in a new Claude chat, and the draft is pasted back. */
+const SYSTEM = "You write posts for one specific person, in their voice. You follow their voice profile and rules exactly, and you never invent facts, numbers, names or stories about them.";
+let sampleFn = null;
+if (window.claude && typeof window.claude.use === "function") {
+  window.claude.use("sample").then(f => { sampleFn = f || null; renderClaudeMode(); }).catch(() => {});
+}
+const SAMPLE_ERR = {
+  not_granted: "Claude wasn't allowed for this page, so it will open in a Claude chat instead.",
+  sampling_disabled: "Claude isn't available on this account here, so it will open in a Claude chat instead.",
+  rate_limited: "You've hit a Claude usage limit. Wait a bit and try again.",
+  session_expired: "Sign in to Claude again, then try again.",
+  refused: "Claude declined to write this one. Try rephrasing your point.",
+  empty_completion: "Claude came back empty. Try again.",
+  prompt_too_large: "That's too much text for one go. Shorten your samples."
+};
+async function claude(prompt) {
+  try {
+    const { text } = await sampleFn(`${SYSTEM}\n\n${prompt}`, { cache: false, modelTier: "default" });
+    return text.trim();
+  } catch (e) {
+    if (e && (e.code === "not_granted" || e.code === "sampling_disabled")) { sampleFn = null; renderClaudeMode(); }
+    throw new Error((e && SAMPLE_ERR[e.code]) || "Something went wrong reaching Claude. Try again.");
+  }
+}
+/* Outside Claude: open a new Claude chat with the prompt ready to send. */
+async function openInClaude(prompt) {
+  const full = `${SYSTEM}\n\n${prompt}`;
+  await copy(full);
+  const url = "https://claude.ai/new?q=" + encodeURIComponent(full);
+  const short = url.length < 7500;
+  window.open(short ? url : "https://claude.ai/new", "_blank", "noopener");
+  toast(short ? "Opened in Claude. Paste the reply back here." : "Prompt copied. Paste it into the new Claude chat.");
+}
+function renderClaudeMode() {
+  $$(".in-claude").forEach(el => el.hidden = !sampleFn);
+  $$(".out-claude").forEach(el => el.hidden = !!sampleFn);
+}
+const examplesBlock = () => {
+  const ex = [...S.samples.filter(has).map(t => t.trim()), ...usableLinks().filter(l => has(l.text)).map(l => l.text.trim())];
+  if (!ex.length) return "";
+  let left = 12000;
+  const parts = ex.map(t => { const c = t.slice(0, Math.max(0, left)); left -= c.length; return c; }).filter(Boolean);
+  return `EXAMPLES OF HOW I WRITE AND TALK (match this voice, rhythm and word choice; don't reuse their content unless it fits my point):
+${parts.map((t, i) => `--- EXAMPLE ${i + 1} ---\n${t}`).join("\n\n")}
+
+`;
+};
+const draftPrompt = () => {
+  const src = S.w.source.trim();
+  const fmt = S.link ? "short video script (Reels / TikTok / Shorts)" : "short post";
+  return `${src ? "Rewrite the draft below so it sounds like me" : `Write a ${fmt} in my voice that makes my point`}.
+
+MY VOICE PROFILE:
+${has(S.profile) ? S.profile.trim() : "(None yet. Write in a plain, specific, human voice.)"}
+
+${examplesBlock()}THE POINT I WANT TO MAKE:
+${S.w.point.trim() || "(See my draft.)"}
+${src ? `\nMY DRAFT:\n${src}\n` : ""}
+FORMAT: ${S.link ? "Short video script, 30–60 seconds (75–150 words)." : "A post of about 100–200 words. Platform versions are made from it later, so don't format it for one platform."}
+
+Rules:
+- Use only the ideas, stories, facts and opinions I gave you. Don't add facts, statistics, quotes, names or examples I didn't give you. If the post needs a detail I didn't give, write [ASK: what's missing] in its place instead of inventing it.
+${src ? "- Keep every fact, number, name and claim in my draft.\n" : ""}- Follow every DO / DON'T rule in my voice profile.
+- No opening line about "today's world", trends or the landscape. Start with the most specific thing I gave you.
+- No closing question unless my point includes one. No hashtags unless my profile allows them.
+- It must read like a person wrote it, not AI. Never use AI giveaway words (delve, leverage, utilize, unlock, unleash, elevate, empower, foster, robust, seamless, game-changer, transformative, crucial, pivotal, landscape, realm, journey, tapestry, testament, synergy, supercharge) or phrases ("In today's fast-paced world", "Let's dive in", "Here's the thing", "In conclusion", "Let me know in the comments").
+- Avoid AI structures: "It's not X, it's Y", lists of three everywhere, every sentence the same length, em-dashes as default punctuation, emojis as bullet points, hashtag stacks, more than one exclamation mark.
+- Vary sentence length. Plain words. Specific over general.${videoRules()}
+
+Return only the post text: no title, no preamble, no notes after it.`;
+};
+const adaptPrompt = () => P4().replace("Return each version under a heading with its platform name and its word or character count.",
+  "Return each version under a markdown heading with just its platform name (e.g. ## LinkedIn). Then the version text, nothing else: no counts, no notes, no preamble.")
+  .replace("Rules for every version:", `Rules for every version:
+- It must read like a person wrote it, not AI: no giveaway words (delve, leverage, unlock, elevate, game-changer, seamless, crucial, landscape), no "It's not X, it's Y", no lists of three everywhere, no em-dash in every sentence, no emoji bullets.`);
+const fixPrompt = () => P3().replace(/Return:\n1\. The edited draft\.\n2\. A table:[^\n]*\n/, "Return only the edited draft: no table, no notes, no preamble.\n");
+
+let busy = false;
+async function runGen(kind) {
+  if (busy) return;
+  const errEl = kind === "draft" ? $("#genErr") : kind === "adapt" ? $("#genErr4") : $("#genErr3");
+  errEl.hidden = true;
+  if (kind === "adapt" && !has(S.draft)) { errEl.textContent = "There's no draft yet. Write one in step 2."; errEl.hidden = false; return; }
+  if (kind === "adapt" && !S.platforms.length) { errEl.textContent = "Pick at least one platform."; errEl.hidden = false; return; }
+  if (kind !== "fix" && kind !== "adapt" && !has(S.w.point) && !has(S.w.source)) { errEl.textContent = "Write the point you want to make first."; errEl.hidden = false; $("#fPoint").focus(); return; }
+  if (kind === "fix" && !has(S.draft)) { errEl.textContent = "There's no draft to fix yet."; errEl.hidden = false; return; }
+  if (!sampleFn) {
+    const prompt = kind === "adapt" ? adaptPrompt() : kind === "fix" ? fixPrompt() : draftPrompt();
+    if (kind === "draft") go(3);
+    if (kind === "adapt") { go(4); $("#rawBox").open = true; }
+    return openInClaude(prompt);
+  }
+  busy = true;
+  const btns = ["#genDraft", "#regen", "#genAdapt", "#regenAdapt"].map(x => $(x)); btns.forEach(x => x.disabled = true);
+  const labels = { adapt: "Writing a draft for each platform…", draft: "Writing your draft…", regen: "Writing another version…", fix: "Fixing the AI tells…" };
+  if (kind === "draft") $("#genDraft").textContent = labels.draft; else if (kind === "adapt") { $("#genAdapt").textContent = labels.adapt; $("#regenAdapt").textContent = labels.adapt; } else $("#genStatus").textContent = labels[kind];
+  try {
+    if (kind === "adapt") {
+      S.adapted = await claude(adaptPrompt()); S.skipped4 = false;
+      save(); syncBound(); renderProgress(); renderLink(); $("#adapted").dispatchEvent(new Event("input", { bubbles: true }));
+      go(4); toast("Your platform drafts are ready."); return;
+    }
+    const text = await claude(kind === "fix" ? fixPrompt() : draftPrompt());
+    S.prevDraft = S.draft; S.draft = text; S.stripped = kind === "fix";
+    save(); syncBound(); renderUndo(); renderProgress();
+    if (kind === "draft") go(3);
+    toast("Draft ready.");
+  } catch (e) {
+    errEl.textContent = e.message || "Something went wrong. Try again."; errEl.hidden = false;
+  } finally {
+    busy = false; btns.forEach(x => x.disabled = false);
+    $("#genDraft").textContent = "Write my draft →"; $("#genAdapt").textContent = "Write a draft for each platform →"; $("#regenAdapt").textContent = "Write them again"; $("#genStatus").textContent = "";
+  }
+}
 
 /* ---------- clipboard + toast ---------- */
 let toastTimer;
@@ -889,6 +924,88 @@ function renderChecker() {
     : '<li><b>No common tells found.</b><br><span class="fix">Still run step 5 to check it sounds like you.</span></li>';
 }
 
+/* ---------- voice profile from picks ----------
+   Each option is [what the person ticks, the rule it becomes in the profile]. Your own entries are used as written. */
+const FIELDS = [
+  { k: "tone", label: "How you sound", multi: true, ph: "e.g. friendly, witty", opts: ["Friendly", "Warm", "Witty", "Playful", "Bold", "Direct", "Confident", "Calm", "Thoughtful", "Eloquent", "Curious", "Empathetic", "Honest and open", "Contrarian", "Encouraging", "No-nonsense", "Polished", "Casual", "Nerdy", "Energetic"] },
+  { k: "persona", label: "You sound like…", multi: false, ph: "Pick one", opts: ["a friend over coffee", "a mentor who's been there", "a coach in your corner", "a teacher who makes it simple", "a storyteller", "an analyst who shows the numbers", "a straight-talking expert", "a hype friend who believes in you"] },
+  { k: "audience", label: "Who you write for", multi: true, wide: true, ph: "e.g. marketers, founders", opts: ["Marketers", "Founders", "Creators", "Job seekers", "Career changers", "Students and new grads", "Small business owners", "People in tech", "People in finance", "Managers and team leads"] },
+  { k: "love", label: "Phrases you actually say (optional)", text: true, ph: "e.g. \"honestly\", \"let's be real\", \"real talk\"" }
+];
+const optVal = o => Array.isArray(o) ? o[0] : o;
+const optRule = (f, v) => { const o = (f.opts || []).find(o => optVal(o) === v); return Array.isArray(o) ? o[1] : v; };
+const picked = k => { const v = S.pick[k]; return Array.isArray(v) ? v : v ? [v] : []; };
+const andList = a => a.length < 2 ? (a[0] || "") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+const lc = t => t.charAt(0).toLowerCase() + t.slice(1);
+
+function profileFromPicks() {
+  const out = ["# Voice profile", ""];
+  const tone = picked("tone").map(lc), persona = picked("persona")[0];
+  if (tone.length || persona) out.push("## How I sound", `I sound like ${persona || "myself"}${tone.length ? `: ${andList(tone)}` : ""}.`, "");
+  if (picked("audience").length) out.push("## Who I write for", `${andList(picked("audience"))}.`, "");
+  if (has(S.pick.love)) out.push("## Phrases I actually say", `Use these where they fit naturally: ${S.pick.love.trim()}`, "");
+  return out.length > 2 ? out.join("\n").trim() : "";
+}
+function msSummary(f) {
+  const v = picked(f.k);
+  if (!v.length) return `<span class="ms-v ph">${esc(f.ph)}</span>`;
+  const shown = v.slice(0, 2).join(", ") + (v.length > 2 ? ` +${v.length - 2} more` : "");
+  return `<span class="ms-v">${esc(shown)}</span>`;
+}
+function renderPickGrid() {
+  $("#pickGrid").innerHTML = FIELDS.map(f => {
+    const id = "pk-" + f.k;
+    if (f.text) return `<div class="wide"><label for="${id}">${esc(f.label)}</label><input type="text" id="${id}" data-pick-text="${f.k}" value="${esc(S.pick[f.k] || "")}" placeholder="${esc(f.ph)}"></div>`;
+    const v = picked(f.k), customs = v.filter(x => !(f.opts || []).some(o => optVal(o) === x));
+    const opts = [...f.opts.map(optVal), ...customs];
+    return `<div class="${f.wide ? "wide" : ""}"><label id="${id}-l">${esc(f.label)}${f.multi ? ' <span class="opt">pick any</span>' : ""}</label>
+      <div class="ms" data-ms="${f.k}">
+        <button type="button" class="ms-btn" aria-haspopup="true" aria-expanded="false" aria-labelledby="${id}-l">${msSummary(f)}<span class="car">▾</span></button>
+        <div class="ms-pop" hidden role="group" aria-labelledby="${id}-l">
+          ${opts.map(o => `<label class="ms-opt"><input type="${f.multi ? "checkbox" : "radio"}" name="${id}" value="${esc(o)}"${v.includes(o) ? " checked" : ""}> ${esc(o)}</label>`).join("")}
+          ${f.multi ? `<input type="text" class="ms-add" data-ms-add="${f.k}" placeholder="Add your own, then press Enter" aria-label="Add your own: ${esc(f.label)}">` : ""}
+        </div>
+      </div></div>`;
+  }).join("");
+}
+function closeAllMs(except) {
+  $$(".ms").forEach(m => { if (m === except) return; const p = m.querySelector(".ms-pop"); if (!p.hidden) { p.hidden = true; m.querySelector(".ms-btn").setAttribute("aria-expanded", "false"); } });
+}
+function applyPicks() {
+  const txt = profileFromPicks();
+  $("#pickPreview").innerHTML = txt ? esc(txt) : '<span class="empty">Your profile appears here as you pick.</span>';
+  const clash = S.profileFrom === "text" && has(S.profile) && S.profile.trim() !== txt;
+  $("#pickClash").hidden = !(clash && txt);
+  if (!clash) { S.profile = txt; S.profileFrom = txt ? "pick" : ""; syncBound(); }
+  save(); renderProgress();
+}
+function renderProfileMode() {
+  const pick = S.profileMode === "pick";
+  $("#pickMode").hidden = !pick; $("#pasteMode").hidden = pick;
+}
+document.addEventListener("change", e => {
+  const ms = e.target.closest(".ms"); if (!ms) return;
+  const k = ms.dataset.ms, f = FIELDS.find(x => x.k === k);
+  S.pick[k] = f.multi ? $$("input:checked", ms).map(i => i.value) : (e.target.value || "");
+  if (!f.multi) { ms.querySelector(".ms-pop").hidden = true; ms.querySelector(".ms-btn").setAttribute("aria-expanded", "false"); ms.querySelector(".ms-btn").focus(); }
+  ms.querySelector(".ms-btn").innerHTML = msSummary(f) + '<span class="car">▾</span>';
+  applyPicks();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") { const open = $$(".ms").find(m => !m.querySelector(".ms-pop").hidden); if (open) { closeAllMs(); open.querySelector(".ms-btn").focus(); } }
+  if (e.key === "Enter" && e.target.dataset.msAdd) {
+    e.preventDefault(); const k = e.target.dataset.msAdd, v = e.target.value.trim().slice(0, 80); if (!v) return;
+    const cur = picked(k); if (!cur.includes(v)) S.pick[k] = [...cur, v];
+    renderPickGrid(); applyPicks();
+    const m = $(`.ms[data-ms="${k}"]`); m.querySelector(".ms-pop").hidden = false; m.querySelector(".ms-btn").setAttribute("aria-expanded", "true"); m.querySelector(".ms-add").focus();
+  }
+});
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".ms-btn");
+  if (btn) { const m = btn.closest(".ms"), p = m.querySelector(".ms-pop"); closeAllMs(m); p.hidden = !p.hidden; btn.setAttribute("aria-expanded", String(!p.hidden)); return; }
+  if (!e.target.closest(".ms")) closeAllMs();
+});
+
 /* ---------- past video links ---------- */
 const PLATS = [[/(^|\.)linkedin\.com$/, "LinkedIn"], [/(^|\.)tiktok\.com$/, "TikTok"], [/(^|\.)instagram\.com$/, "Instagram"],
   [/(^|\.)(youtube\.com|youtu\.be)$/, "YouTube"], [/(^|\.)(x\.com|twitter\.com)$/, "X"], [/(^|\.)threads\.(net|com)$/, "Threads"],
@@ -935,6 +1052,27 @@ function sampleMeta() {
 }
 
 /* ---------- platforms ---------- */
+function splitVersions(text) {
+  const out = []; let cur = null;
+  for (const line of String(text || "").split("\n")) {
+    const m = line.match(/^\s*(?:#{1,4}\s*|\*\*)\s*([^*#:\n]{2,40}?)\s*(?:\*\*)?\s*:?\s*(?:\*\*)?\s*$/);
+    if (m && line.trim().length <= 60) { cur = { name: m[1].trim(), text: "" }; out.push(cur); }
+    else if (cur) cur.text += line + "\n";
+  }
+  return out.map(v => ({ name: v.name, text: v.text.trim() })).filter(v => v.text);
+}
+function joinVersions(vs) { return vs.map(v => `## ${v.name}\n\n${v.text.trim()}`).join("\n\n"); }
+function renderVersions() {
+  const box = $("#versions"); if (!box) return;
+  const vs = splitVersions(S.adapted);
+  box.innerHTML = vs.length ? vs.map((v, i) => `
+    <div class="block">
+      <div class="draft-head"><h3>${esc(v.name)}</h3><span class="hint" style="margin:0">${words(v.text)} words</span></div>
+      <textarea class="tall" data-ver="${i}" aria-label="${esc(v.name)} draft" style="min-height:180px">${esc(v.text)}</textarea>
+      <div class="btns"><button class="btn primary small" data-copy-ver="${i}">Copy for ${esc(v.name)}</button></div>
+    </div>`).join("")
+    : (has(S.adapted) ? "" : '<div class="block"><p class="hint" style="margin:0">No platform drafts yet. Go back, pick where it will be posted, and click “Write a draft for each platform”.</p></div>');
+}
 function renderPlatforms() {
   $("#platforms").innerHTML = Object.keys(PLATFORM_RULES).map(p =>
     `<label class="chip"><input type="checkbox" value="${esc(p)}" ${S.platforms.includes(p) ? "checked" : ""}> ${esc(p)}</label>`).join("");
@@ -942,43 +1080,27 @@ function renderPlatforms() {
 
 /* ---------- step navigation + progress ---------- */
 const doneFns = {
-  1: () => words(S.profile) >= 60,
-  2: () => has(S.draft),
-  3: () => S.stripped || (has(S.draft) && analyze(S.draft).score >= 85),
-  4: () => has(S.adapted) || S.skipped4,
-  5: () => has(S.overall) || has(S.scoreOut)
+  1: () => has(S.profile),
+  2: () => has(S.w.point) || has(S.w.source),
+  3: () => has(S.draft),
+  4: () => has(S.adapted)
 };
 function renderProgress() {
   let n = 0;
   $$(".step-btn").forEach(b => { const k = +b.dataset.go; const d = doneFns[k](); if (d) n++; b.classList.toggle("done", d); b.setAttribute("aria-label", `Step ${k}${d ? ", done" : ""}`); });
-  $("#progressText").textContent = `${n} of 5 steps done`;
+  $("#progressText").textContent = `${n} of 4 steps done`;
   $("#progressBar").setAttribute("aria-valuenow", n);
-  $("#progressBar i").style.width = (n / 5 * 100) + "%";
+  $("#progressBar i").style.width = (n / 4 * 100) + "%";
 }
 function go(step, focus = true) {
   S.step = step; save();
   $$(".panel").forEach(p => p.hidden = +p.dataset.step !== step);
   $$(".step-btn").forEach(b => { if (+b.dataset.go === step) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current"); });
-  if (step === 3) renderChecker();
-  if (step === 5) renderOverall();
+  if (step === 4) renderVersions();
   if (focus) { const h = $(`.panel[data-step="${step}"] h2`); h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); window.scrollTo({ top: 0, behavior: "smooth" }); }
 }
 
-function renderMode() {
-  const notes = S.w.mode === "notes";
-  $("#tabNotes").setAttribute("aria-selected", notes); $("#tabRewrite").setAttribute("aria-selected", !notes);
-  $("#modeNotes").hidden = !notes; $("#modeRewrite").hidden = notes;
-}
 
-function renderOverall() {
-  const v = parseFloat(String(S.overall).replace(",", "."));
-  const note = $("#overallNote"), fin = $("#finish");
-  note.className = "note";
-  if (isNaN(v)) { note.textContent = "Enter the overall score to see what to do next."; fin.hidden = true; return; }
-  if (v >= 8) { note.className = "note ok"; note.textContent = "Post it."; fin.hidden = false; }
-  else if (v >= 6) { note.textContent = "Apply the fixes it suggested, paste the new version in step 3, then post."; fin.hidden = false; }
-  else { note.className = "note bad"; note.textContent = "Start again from your notes in step 2. Rewriting a weak draft rarely gets past a 7."; fin.hidden = true; }
-}
 
 function renderUndo() { $("#undoEdited").hidden = !has(S.prevDraft); }
 
@@ -988,10 +1110,16 @@ function syncBound() {
 }
 document.addEventListener("input", e => {
   const el = e.target;
+  if (el.dataset.pickText) { S.pick[el.dataset.pickText] = el.value; applyPicks(); return; }
   if (el.dataset.bind) {
     set(el.dataset.bind, el.value);
-    if (el.dataset.bind === "draft") { S.stripped = false; $$('[data-bind="draft"]').forEach(o => { if (o !== el) o.value = el.value; }); if (S.step === 3) renderChecker(); }
-    if (el.dataset.bind === "overall") renderOverall();
+    if (el.dataset.bind === "profile") S.profileFrom = has(el.value) ? "text" : "";
+    if (el.dataset.ver != null) {
+      const vs = splitVersions(S.adapted); const v = vs[+el.dataset.ver];
+      if (v) { v.text = el.value; S.adapted = joinVersions(vs); save(); const raw = $("#adapted"); if (raw) raw.value = S.adapted; const c = el.parentElement.querySelector(".draft-head .hint"); if (c) c.textContent = words(el.value) + " words"; }
+    }
+    if (el.dataset.bind === "adapted") renderVersions();
+    if (el.dataset.bind === "draft") { S.stripped = false; $$('[data-bind="draft"]').forEach(o => { if (o !== el) o.value = el.value; });  }
     if (el.dataset.bind === "adapted") renderLink();
   }
   if (el.dataset.sample != null) { S.samples[+el.dataset.sample] = el.value; sampleMeta(); const m = el.parentElement.querySelector(".meta span"); if (m) m.textContent = words(el.value) + " words"; }
@@ -1008,9 +1136,10 @@ document.addEventListener("click", async e => {
   const b = e.target.closest("button, [data-go]"); if (!b) return;
   if (b.dataset.go) return go(+b.dataset.go);
   if (b.dataset.next) return go(+b.dataset.next);
-  if (b.dataset.mode) { S.w.mode = b.dataset.mode; save(); return renderMode(); }
+  if (b.dataset.pmode) { S.profileMode = b.dataset.pmode; save(); renderProfileMode(); if (S.profileMode === "pick") applyPicks(); return; }
   if (b.dataset.delLink != null) { S.links.splice(+b.dataset.delLink, 1); save(); renderLinks(); sampleMeta(); return; }
   if (b.dataset.delSample != null) { S.samples.splice(+b.dataset.delSample, 1); save(); return renderSamples(); }
+  if (b.dataset.copyVer != null) { const v = splitVersions(S.adapted)[+b.dataset.copyVer]; if (v) toast((await copy(v.text)) ? v.name + " draft copied." : "Couldn't copy automatically."); return; }
   if (b.dataset.copy) {
     const k = b.dataset.copy, [lvl, msg] = checks[k](), note = $(`#${k}note`);
     note.hidden = false; note.className = "note" + (lvl === "ok" ? " ok" : lvl === "bad" ? " bad" : ""); note.textContent = msg;
@@ -1020,28 +1149,24 @@ document.addEventListener("click", async e => {
     return;
   }
   switch (b.id) {
+    case "editPicked": S.profileMode = "paste"; S.profileFrom = has(S.profile) ? "text" : ""; save(); renderProfileMode(); syncBound(); $('[data-bind="profile"]').focus(); break;
+    case "usePicks": S.profileFrom = ""; applyPicks(); toast("Profile replaced with your picks."); break;
     case "addLink": if (S.links.length < 10) { S.links.push({ url: "", text: "" }); save(); renderLinks(); $(`[data-link-url="${S.links.length - 1}"]`).focus(); } break;
     case "addSample": if (S.samples.length < 5) { S.samples.push(""); save(); renderSamples(); $(`#s${S.samples.length - 1}`).focus(); } break;
     case "useTemplate":
       if (has(S.profile) && !confirm("Replace your current voice profile with the blank template?")) break;
-      S.profile = TEMPLATE; save(); syncBound(); renderProgress(); $('[data-bind="profile"]').focus(); break;
-    case "editDraft": {
-      const ed = $("#draftEditor"), open = ed.hidden;
-      ed.hidden = !open; $("#preview").hidden = open; b.textContent = open ? "Show check" : "Edit draft";
-      if (open) { ed.value = S.draft; ed.focus(); } else renderChecker();
-      break;
-    }
-    case "applyEdited":
-      if (!has(S.pasteEdited)) { toast("Paste the edited draft into the box first."); break; }
-      S.prevDraft = S.draft; S.draft = S.pasteEdited.trim(); S.pasteEdited = ""; S.stripped = true;
-      save(); syncBound(); renderChecker(); renderUndo(); renderProgress(); toast("Draft updated. Check the new score above."); break;
+      S.profile = TEMPLATE; S.profileFrom = "text"; save(); syncBound(); renderProgress(); $('[data-bind="profile"]').focus(); break;
+    case "genDraft": runGen("draft"); break;
+    case "regen": runGen("regen"); break;
+    case "genAdapt": case "regenAdapt": runGen("adapt"); break;
+    case "copyDraft": toast((await copy(S.draft)) ? "Draft copied." : "Couldn't copy automatically."); break;
+    case "dlVoice": exportKit(); break;
     case "undoEdited":
-      [S.draft, S.prevDraft] = [S.prevDraft, ""]; S.stripped = false; save(); syncBound(); renderChecker(); renderUndo(); renderProgress(); toast("Restored the previous version."); break;
-    case "skip4": S.skipped4 = true; save(); renderProgress(); go(5); break;
+      [S.draft, S.prevDraft] = [S.prevDraft, ""]; S.stripped = false; save(); syncBound(); renderUndo(); renderProgress(); toast("Restored the previous version."); break;
     case "copyFinal": toast((await copy(S.draft)) ? "Final draft copied." : "Couldn't copy automatically."); break;
     case "newPostBtn": case "newPost2":
       if (!confirm("Start a new post? Your voice profile stays; the current draft, versions and score are cleared.")) break;
-      { const keep = { samples: S.samples, links: S.links, profile: S.profile, platforms: S.platforms }; S = Object.assign(blank(), keep); S.w.mode = "notes"; save(); syncBound(); renderAll(); go(2); }
+      { const keep = { samples: S.samples, links: S.links, profile: S.profile, profileMode: S.profileMode, profileFrom: S.profileFrom, pick: S.pick, platforms: S.platforms }; S = Object.assign(blank(), keep); save(); syncBound(); renderAll(); go(2); }
       break;
     case "resetBtn":
       if (!confirm("Erase everything, including your voice profile and samples? This can't be undone. Download your voice kit first if you want to keep it.")) break;
@@ -1059,20 +1184,24 @@ document.addEventListener("click", async e => {
   }
 });
 
-function exportKit() {
-  const parts = [
-    "# My voice kit", "", `Saved ${new Date().toISOString().slice(0, 10)} from Tone of Voice Studio.`, "",
-    "## Voice profile", "", S.profile.trim() || "_Not written yet._", "",
-    "## Current draft", "", S.draft.trim() || "_None._", ""
-  ];
-  if (has(S.adapted)) parts.push("## Platform versions", "", S.adapted.trim(), "");
-  if (has(S.scoreOut)) parts.push("## Scorecard", "", S.scoreOut.trim(), "");
-  parts.push("## Writing samples", "", ...S.samples.filter(has).map((s, i) => `### Sample ${i + 1}\n\n${s.trim()}\n`));
-  const L = usableLinks();
-  if (L.length) parts.push("## Past video posts", "", ...L.map((l, i) => `### Video ${i + 1}${l.info.ok ? ` (${l.info.label})\n\n${l.info.url}` : ""}\n\n${l.text.trim() || "_No transcript pasted._"}\n`));
-  const blob = new Blob([parts.join("\n")], { type: "text/markdown" });
-  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "my-voice-kit.md";
+async function saveFile(filename, text) {
+  try {
+    const dl = window.claude && typeof window.claude.use === "function" ? await window.claude.use("downloads") : null;
+    if (dl) { await dl.save({ filename, data: new Blob([text], { type: "text/markdown" }) }); return true; }
+  } catch (e) { return false; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], { type: "text/markdown" })); a.download = filename;
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  return true;
+}
+async function exportKit() {
+  if (!has(S.profile)) { go(1); toast("Tell it how you sound first."); return; }
+  const parts = [S.profile.trim(), ""];
+  const ex = S.samples.filter(has);
+  if (ex.length) parts.push("## Examples of how I write", "", ...ex.map((t, i) => `### Example ${i + 1}\n\n${t.trim()}\n`));
+  const L = usableLinks().filter(l => has(l.text));
+  if (L.length) parts.push("## How I talk (video transcripts)", "", ...L.map((l, i) => `### Video ${i + 1}${l.info.ok ? ` (${l.info.url})` : ""}\n\n${l.text.trim()}\n`));
+  parts.push("---", "Made with Tone of Voice Studio by RC in Marketing: https://github.com/rcinmarketing/ai-tone-of-voice-prompts", "");
+  if (await saveFile("my-tone-of-voice.md", parts.join("\n"))) toast("Saved my-tone-of-voice.md. Add it to a Claude Project so Claude always writes like you.");
 }
 
 /* ---------- Content and Video Studio hand-off ----------
@@ -1104,14 +1233,14 @@ function importCard(c) {
   const t = v => typeof v === "string" ? v.slice(0, 20000).trim() : "";
   const body = [t(c.hook), t(c.script), t(c.cta)].filter(Boolean).join("\n\n");
   if (!body) { toast("That video has no hook or script yet."); return false; }
-  if ((has(S.draft) || has(S.w.source) || has(S.w.notes)) && !confirm("Replace the post you're working on with this video? Your voice profile stays.")) return false;
-  const keep = { samples: S.samples, links: S.links, profile: S.profile };
+  if ((has(S.draft) || has(S.w.source) || has(S.w.point)) && !confirm("Replace the post you're working on with this video? Your voice profile stays.")) return false;
+  const keep = { samples: S.samples, links: S.links, profile: S.profile, profileMode: S.profileMode, profileFrom: S.profileFrom, pick: S.pick };
   S = Object.assign(blank(), keep);
   S.link = { planId: typeof c.planId === "string" ? c.planId.slice(0, 40) : "", title: t(c.title) || "Untitled video", hasHook: !!t(c.hook), hasCta: !!t(c.cta) };
-  S.w.mode = "rewrite"; S.w.source = body; S.w.format = "short-form video script (Reels / TikTok / Shorts)"; S.w.audience = t(c.audience);
+  S.w.source = body; S.w.format = "Short video script (Reels / TikTok / Shorts)"; S.w.point = "Polish this video script so it sounds like me" + (t(c.audience) ? ` (for ${t(c.audience)})` : "") + ".";
   const plats = (Array.isArray(c.platforms) ? c.platforms : []).map(k => VS_NAMES[k]).filter(Boolean);
   S.platforms = plats.length ? plats : ["LinkedIn", "Instagram", "TikTok", "YouTube Shorts"];
-  save(); renderAll(); go(2); toast(`Imported “${S.link.title}”. Copy the rewrite prompt in box B.`); return true;
+  save(); renderAll(); go(2); $("#srcBox").open = true; toast(`Imported “${S.link.title}”. Click “Write my draft”.`); return true;
 }
 async function importFromVS() {
   let c = null;
@@ -1132,15 +1261,15 @@ async function sendToVS() {
 function renderLink() {
   const bar = $("#linkbar"), l = S.link;
   bar.classList.toggle("linked", !!l);
-  $("#linkInfo").innerHTML = l ? `Linked to Video Studio: <b>${esc(l.title)}</b>` : "Working on a video? Bring its script over from <b>Content and Video Studio</b>.";
+  $("#linkInfo").innerHTML = l ? `Linked to Video Studio: <b>${esc(l.title)}</b>` : 'Working on a video? Bring its script over from <a href="https://github.com/rcinmarketing/content-planning-and-editing" target="_blank" rel="noopener"><b>Content and Video Studio</b></a>.';
   $("#sendVS").hidden = !l; $("#unlinkVS").hidden = !l; $("#sendVS2").hidden = false;
   const caps = parseCaptions(S.adapted), names = Object.keys(caps).map(k => VS_NAMES[k]);
   $("#capFound").textContent = has(S.adapted) ? (names.length ? `Found captions for ${names.join(", ")}. “Send to Video Studio” puts each on its platform.` : "No platform headings found, so only the draft will be sent to Video Studio.") : "";
 }
 
-function renderAll() { renderSamples(); renderLinks(); sampleMeta(); renderPlatforms(); renderMode(); syncBound(); renderUndo(); renderProgress(); renderOverall(); renderLink(); }
+function renderAll() { renderSamples(); renderLinks(); sampleMeta(); renderPickGrid(); renderProfileMode(); applyPicks(); renderPlatforms(); renderClaudeMode(); syncBound(); renderUndo(); renderProgress(); renderLink(); renderVersions(); }
 renderAll();
-go(S.step || 1, false);
+go(Math.min(S.step || 1, 4), false);
 })();
 </script>
 </body>

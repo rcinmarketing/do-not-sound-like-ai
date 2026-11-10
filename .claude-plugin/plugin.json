@@ -1,0 +1,8 @@
+{
+  "name": "tone-of-voice",
+  "description": "Write posts in your own voice, with no AI giveaways, and get a draft for each platform.",
+  "version": "1.0.0",
+  "author": { "name": "Rizza Carla Ramos (RC in Marketing)", "url": "https://github.com/rcinmarketing" },
+  "homepage": "https://github.com/rcinmarketing/ai-tone-of-voice-prompts",
+  "license": "MIT"
+}

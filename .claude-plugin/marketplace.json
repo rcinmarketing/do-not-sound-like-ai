@@ -1,0 +1,11 @@
+{
+  "name": "rc-in-marketing",
+  "owner": { "name": "RC in Marketing", "url": "https://github.com/rcinmarketing" },
+  "plugins": [
+    {
+      "name": "tone-of-voice",
+      "source": "./",
+      "description": "Write posts in your own voice, with no AI giveaways, and get a draft for each platform."
+    }
+  ]
+}

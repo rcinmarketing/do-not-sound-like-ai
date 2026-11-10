@@ -10,20 +10,35 @@ You ask an AI to write a LinkedIn post and you get "In today's fast-paced world�
 
 The fix isn't one magic prompt. It's a short workflow: **capture your voice once, write with it every time, then check the draft for AI tells before you post.**
 
-## Use the dashboard (easiest)
+## Add it to Claude (easiest)
 
-**[Tone of Voice Studio](index.html)** takes you through all five steps in one page:
+Tell Claude how you sound once, then just say what point you want to make. Claude writes it in your voice, removes the AI giveaways on its own, and gives you a draft for each platform you post on. No API key: it runs on your own Claude plan.
 
-- It fills each prompt with your own samples, notes and draft, ready to copy into Claude, ChatGPT or Gemini.
-- It saves your voice profile, so every later prompt already includes it.
-- **Instant AI-tell check:** it highlights giveaway words and patterns in your draft and gives it a 0–100 human score, with no AI needed.
-- It keeps your draft, platform versions and score together, and you can download it all as one "voice kit" file.
+**Claude Code:**
+
+```
+/plugin marketplace add rcinmarketing/ai-tone-of-voice-prompts
+/plugin install tone-of-voice@rc-in-marketing
+```
+
+**Claude.ai or the Claude app:** download [`skills/tone-of-voice`](skills/tone-of-voice) as a ZIP and upload it under **Settings → Capabilities → Skills**.
+
+Then ask: *"Write a post in my voice: I stopped letting AI write my posts and my comments doubled."*
+
+## Or use Tone of Voice Studio
+
+**[Tone of Voice Studio](index.html)** walks you through it in four clicks:
+
+1. **How you sound.** Pick from a few lists, or add your own words. Optional: paste things you've written and video transcripts.
+2. **What you want to say.** Just your point.
+3. **Your draft**, in your voice. Pick where it will be posted.
+4. **A draft for each platform**, ready to copy.
+
+Opened inside Claude, it writes with your own Claude directly. Opened anywhere else, each step opens a new Claude chat with everything filled in, and you paste the reply back. **Download voice kit** saves your voice as `my-tone-of-voice.md`: add it to a Claude Project and every chat writes like you.
 
 **Works with [Content and Video Studio](https://github.com/rcinmarketing/content-planning-and-editing).** Send a video's script over with one click, polish it here, then send the script and a caption for each platform back. See [how the two connect](VIDEO-STUDIO.md).
 
-To run it, download this repo (green **Code** button → **Download ZIP**) and double-click `index.html`. There's nothing to install, and nothing you type leaves your browser.
-
-## The workflow
+## The prompts (if you'd rather copy and paste)
 
 | Step | Prompt | What you get | Time |
 |---|---|---|---|
