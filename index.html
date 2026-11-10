@@ -310,6 +310,27 @@ footer.credit .follow a:hover{color:var(--cyan)}
   .panel h2{font-size:38px;margin-right:72px}
 }
 @media (prefers-reduced-motion:reduce){.btn,.chip,.panel h2{transform:none!important}}
+
+/* Quieter pass: flat paper background with a light halftone, no rays or tilts, lighter shadows,
+   and plain cards inside the panel. The comic touches stay on the headline, starburst, caption box and buttons. */
+body{background:var(--paper) radial-gradient(rgba(255,107,44,.22) 1.4px,transparent 1.6px) 0 0/14px 14px}
+.panel{box-shadow:6px 6px 0 var(--ink);border-width:3px}
+.panel h2{transform:none;font-size:46px;text-shadow:3px 3px 0 var(--ink)}
+.block{border:2px solid var(--ink);box-shadow:none}
+.block h3{font-size:21px}
+.block h3 .tag{background:var(--yel)}
+.step-btn{border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+.step-btn[aria-current="step"]{background:var(--yel)}
+.rail-foot{border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+.btn{border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.btn.primary{text-shadow:none}
+.chip:has(input:checked){transform:none;background:var(--yel)}
+.lede{box-shadow:none;border-width:2px}
+.linkbar{border-width:2px;box-shadow:3px 3px 0 var(--ink)}
+.linkbar::before{border-width:19px 4px 0 20px}
+.linkbar::after{bottom:-15px;border-width:16px 2px 0 15px}
+@media (max-width:860px){.panel h2{font-size:36px}}
 </style>
 </head>
 <body>
