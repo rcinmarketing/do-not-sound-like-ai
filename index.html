@@ -945,8 +945,12 @@ Return only the post text: no title, no preamble, no notes after it.`;
 const adaptPrompt = () => P4().replace("Return each version under a heading with its platform name and its word or character count.",
   "Return each version under a markdown heading with just its platform name (e.g. ## LinkedIn). Then the version text, nothing else: no counts, no notes, no preamble.")
   .replace("{{paste voice profile}}", DEFAULT_VOICE)
-  .replace("ORIGINAL PIECE:", `${notesBlock()}ORIGINAL PIECE:`)
-  .replace("Rules for every version:", `Rules for every version:\n${NO_SLOP}`);
+  .replace("ORIGINAL PIECE:", `${notesBlock()}MY APPROVED DRAFT (I've already edited and approved this, so keep it as close as you can):`)
+  .replace("Rules for every version:", `Rules for every version:
+- My draft is approved. Keep its wording, phrases and emojis wherever the platform allows. Only change what the platform's format needs (length, hook, line breaks, hashtags, extra parts like a subject line).
+- Keep every emoji I used, in the same spot, unless the platform rules say otherwise for that part (e.g. a subject line). Don't add new emojis.
+- The writing rules below are about what YOU add. Never remove or rewrite something from my approved draft just because of them.
+${NO_SLOP}`);
 const fixPrompt = () => P3().replace(/Return:\n1\. The edited draft\.\n2\. A table:[^\n]*\n/, "Return only the edited draft: no table, no notes, no preamble.\n");
 
 let busy = false;

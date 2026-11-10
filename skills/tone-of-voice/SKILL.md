@@ -84,6 +84,8 @@ Follow each platform's best practices for captions, reach and search:
 
 Keep parts a platform needs (Subject, Preview, Title, Description, First comment) as plain lines inside its section, not as new headings.
 
+Once the user approves a draft, treat it as final: keep their wording, phrases and emojis in every platform version, in the same spots, and change only what the platform's format needs. Don't add new emojis. The writing constraints in section 3 apply to what you add, never as a reason to remove what the user wrote.
+
 Before you hand anything over, reread every version against section 3 and fix anything that slipped through.
 
 ## Tone of Voice Studio
