@@ -336,7 +336,6 @@ footer.credit .follow a:hover{color:var(--pink)}
       <div class="btns">
         <button class="btn primary" id="sendVS2">Send to Video Studio and Schedule</button>
         <button class="btn" id="newPost2">Start a new post</button>
-        <button class="btn" id="regenAdapt">Write a new script</button>
         <button class="btn" id="dlDrafts">Download MD file</button>
       </div>
       <div class="btns"><button class="btn small ghost" data-next="3">← Back to your draft</button></div>
@@ -747,9 +746,9 @@ async function runGen(kind) {
     return openInClaude(prompt);
   }
   busy = true;
-  const btns = ["#genDraft", "#regen", "#genAdapt", "#regenAdapt"].map(x => $(x)); btns.forEach(x => x.disabled = true);
+  const btns = ["#genDraft", "#regen", "#genAdapt"].map(x => $(x)); btns.forEach(x => x.disabled = true);
   const labels = { adapt: "Writing a draft for each platform…", draft: "Writing your draft…", regen: "Writing another version…", fix: "Fixing the AI tells…" };
-  if (kind === "draft") $("#genDraft").textContent = labels.draft; else if (kind === "adapt") { $("#genAdapt").textContent = labels.adapt; $("#regenAdapt").textContent = labels.adapt; } else $("#genStatus").textContent = labels[kind];
+  if (kind === "draft") $("#genDraft").textContent = labels.draft; else if (kind === "adapt") { $("#genAdapt").textContent = labels.adapt; } else $("#genStatus").textContent = labels[kind];
   try {
     if (kind === "adapt") {
       S.adapted = await claude(adaptPrompt()); S.skipped4 = false;
@@ -765,7 +764,7 @@ async function runGen(kind) {
     errEl.textContent = e.message || "Something went wrong. Try again."; errEl.hidden = false;
   } finally {
     busy = false; btns.forEach(x => x.disabled = false);
-    $("#genDraft").textContent = "Write my draft →"; $("#genAdapt").textContent = "Write a draft for each platform →"; $("#regenAdapt").textContent = "Write a new script"; $("#genStatus").textContent = "";
+    $("#genDraft").textContent = "Write my draft →"; $("#genAdapt").textContent = "Write a draft for each platform →"; $("#genStatus").textContent = "";
   }
 }
 
@@ -1159,7 +1158,7 @@ document.addEventListener("click", async e => {
       S.profile = TEMPLATE; S.profileFrom = "text"; save(); syncBound(); renderProgress(); $('[data-bind="profile"]').focus(); break;
     case "genDraft": runGen("draft"); break;
     case "regen": runGen("regen"); break;
-    case "genAdapt": case "regenAdapt": runGen("adapt"); break;
+    case "genAdapt": runGen("adapt"); break;
     case "copyDraft": toast((await copy(S.draft)) ? "Draft copied." : "Couldn't copy automatically."); break;
     case "dlVoice": exportKit(); break;
     case "dlDrafts": {
