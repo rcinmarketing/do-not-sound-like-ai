@@ -78,4 +78,4 @@ Works with any modern chat AI. Each prompt has `{{placeholders}}`: replace them,
 - [Content and Video Studio](https://github.com/rcinmarketing/content-planning-and-editing): plan and edit short-form videos in one browser tab.
 - [AI UI/UX Prompts](https://github.com/rcinmarketing/ai-ui-ux-prompts): make AI-built interfaces stop looking AI-built.
 
-Made by Rizza Carla Ramos ([RC in Marketing](https://github.com/rcinmarketing)). MIT licensed: use these prompts at work, adapt them, share them. A link back is appreciated.
+Made by Rizza Carla Ramos ([RC in Marketing](https://github.com/rcinmarketing)). Free to use at work, adapt and share under the [MIT License with Attribution Requirement](LICENSE): any copy or version of Tone of Voice Studio must keep the credit footer visible, and shared copies of the prompts or skill must credit RC in Marketing with a link back to this repo.
