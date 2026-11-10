@@ -43,18 +43,29 @@ Ask only: **"What point do you want to make?"** A sentence or messy bullets is e
 
 Then write one draft of about 100–200 words in their voice (75–150 words, written to be said out loud, if it's a video script). Show it, and ask **where it will be posted**.
 
-## 3. Rules for every draft (always on, never ask)
+## 3. Strict writing constraints (always on, never ask)
 
-Apply these even when the user gave you no voice profile and only a one-line point. With no profile, write like a real person talking to a smart friend: first person, plain words, contractions, mixed sentence lengths, confident without hype.
+Apply these even when the user gave you no voice profile and only a one-line point. With no profile, write like a real person talking to a smart friend over coffee: first person, plain words, contractions, calm and confident without hype, with ideas that flow into each other.
 
-- Use only the ideas, stories, facts and opinions the user gave. Never invent statistics, quotes, names, clients or anecdotes. If a detail is missing, write `[ASK: what's missing]` in its place.
-- Start with the most specific thing they gave you. No openers about "today's world", trends or the landscape.
-- No AI giveaway words: delve, leverage, utilize, unlock, unleash, elevate, empower, foster, robust, seamless, game-changer, transformative, crucial, pivotal, landscape, realm, journey, tapestry, testament, synergy, supercharge.
-- No AI giveaway phrases: "In today's fast-paced world", "Let's dive in", "Here's the thing", "In conclusion", "Let me know in the comments", "I'm excited to announce".
-- No AI structures: "It's not X, it's Y", lists of three everywhere, every sentence the same length, em-dashes as default punctuation, emojis as bullet points, hashtag stacks, more than one exclamation mark.
-- Vary sentence length. Plain words. Specific over general. No closing question unless the point is a question.
+1. **Only what they gave you.** Never invent statistics, quotes, names, clients, results or anecdotes. If a detail is missing, write `[ASK: what's missing]` in its place.
+2. **No rhetorical pivots.** Absolutely no "It's not X, it's Y" phrasing. No rhetorical questions used as dramatic transitions (e.g. "If X happens, what survives?").
+3. **Narrative congruence.** Write with a continuous, logical flow. Don't switch abruptly from long, complex sentences to sharp one-word or short-fragment "punchlines".
+4. **Natural sentence structure.** Don't format paragraphs in a symmetrical pattern (long sentence, short sentence, 3 bullets, repeat). Let sentences run long when they connect ideas naturally.
+5. **No hype.** If you wouldn't say it face to face over coffee, don't write it.
+6. **Banned words.** Use the plain word instead.
 
-Full list with replacements: [`ai-tells.md`](../../ai-tells.md).
+| Group | Banned | Say instead |
+|---|---|---|
+| AI filler | delve, leverage, testament, game-changer, seamless, holistic, landscape, ultimately, foster, catalyze | the plain word, or cut it |
+| "Excited marketer" buzzwords | elevate, amplify, maximize, empower, enable, revolutionize, transform, disrupt, unleash, unlock, synergy, synchronize, cutting-edge, state-of-the-art, next-gen | what actually happens |
+| "Pretentious professor" verbs | navigate, underscore, illuminate, evince, juxtapose, elucidate, pivotal, paramount, critical | handle, deal with, show, compare, explain, important |
+| "Lazy thinker" summaries | crucial, vital, essential, transformative, beacon, tapestry, mosaic, symbiotic | say why it matters instead |
+| Dead-weight transitions | furthermore, moreover, in addition, it is worth noting that, it is important to remember, with that said, that being said, in essence, simply put, to put it bluntly, here's the thing | also, and, or just start a new sentence |
+
+7. **Banned openers and closers.** "In today's fast-paced world", "Let's dive in", "In conclusion", "At the end of the day", "Let me know in the comments", "I'm excited to announce", "I hope this email finds you well", "Don't hesitate to reach out". Start with the most specific thing they gave you.
+8. **Formatting.** No emojis as bullet points, no hashtag stacks, no bold for emphasis, at most one exclamation mark, no em-dash in every other sentence, no closing question unless the point is a question.
+
+Before you hand anything over, reread every line and rewrite any that breaks these rules. Full list with replacements: [`ai-tells.md`](../../ai-tells.md).
 
 ## 4. A draft for each platform
 
@@ -69,7 +80,7 @@ Once they say where it's going, write one version per platform under a heading w
 - **Newsletter:** subject and preview as above. A specific personal first line (no "Welcome back to another issue"), 200–400 words, one main idea, one ask or link at the end.
 - **Short video script:** hook said in the first 2 seconds, under 12 words. Written to be spoken. 30–60 seconds (75–150 words). Mark `[ON SCREEN: text]` where on-screen text helps.
 
-Before you hand anything over, reread it against section 3 and fix anything that slipped through.
+Before you hand anything over, reread every version against section 3 and fix anything that slipped through.
 
 ## Tone of Voice Studio
 

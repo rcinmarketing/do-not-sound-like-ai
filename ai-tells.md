@@ -2,6 +2,15 @@
 
 None of these words is banned in itself. The problem is density: five of them in one post and readers stop trusting it. Use this list with [prompt 03](prompts/03-strip-ai-tells.md), or add it to your voice profile's DON'T rules.
 
+## Strict writing constraints
+
+Tone of Voice Studio and the Claude skill apply these to every draft:
+
+1. **No rhetorical pivots.** Absolutely no "It's not X, it's Y" phrasing. No rhetorical questions used as dramatic transitions ("If X happens, what survives?").
+2. **Narrative congruence.** A continuous, logical flow. No abrupt switches from long, complex sentences to one-word or short-fragment "punchlines".
+3. **Natural sentence structure.** No symmetrical paragraph pattern (long sentence, short sentence, 3 bullets, repeat). Let sentences run long when they connect ideas naturally.
+4. **No hype.** If you wouldn't say it face to face over coffee, don't write it.
+
 ## Words
 
 | Instead of | Say |
@@ -27,6 +36,25 @@ None of these words is banned in itself. The problem is density: five of them in
 | synergy | working together |
 | in order to | to |
 | it's worth noting that | cut it |
+| amplify, maximize | grow, get more, or say how much |
+| enable | let, help |
+| transform, revolutionize, disrupt | change, or say what changed |
+| synchronize | line up, match |
+| next-gen | new, or name the thing |
+| underscore, illuminate, evince | show, highlight |
+| juxtapose | compare, put side by side |
+| elucidate | explain |
+| essential, critical | important, or cut it |
+| ultimately | cut it |
+| catalyze | start, kick off |
+| a beacon of | say what it does |
+| a rich tapestry, a mosaic of | a mix of, or name the parts |
+| symbiotic | they help each other |
+| furthermore, moreover, in addition | also, and, or start a new sentence |
+| it is important to remember | cut it |
+| with that said, that being said | but, still, or cut it |
+| in essence, simply put | cut it and just say it |
+| to put it bluntly | cut it and just say it |
 
 ## Phrases
 
