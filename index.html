@@ -150,6 +150,14 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px soli
   padding:12px 18px;font-weight:600;border:2px solid var(--line);box-shadow:4px 4px 0 var(--pink);z-index:10;max-width:calc(100% - 32px)}
 .toast[hidden]{display:none}
 
+.linkbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:-8px 0 22px;padding:10px 12px;border:2px solid var(--line);background:var(--card)}
+.linkbar .lbl{font-family:"Space Mono",monospace;font-size:13px;color:var(--ink2)}
+.linkbar .lbl b{color:var(--ink)}
+.linkbar.linked{background:var(--teal);color:var(--on-tag)}
+.linkbar.linked .lbl{color:var(--on-tag)}
+dialog{border:2px solid var(--line);box-shadow:6px 6px 0 var(--line);background:var(--card);color:var(--ink);padding:20px;width:min(560px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(20,17,31,.45)}
+dialog h3{font-size:20px;margin-bottom:6px}
 .foot{margin-top:40px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
 .foot a{color:var(--ink2)}
 
@@ -174,6 +182,13 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px soli
     <div class="bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progressBar"><i></i></div>
   </div>
 </header>
+
+<div class="linkbar" id="linkbar">
+  <span class="lbl" id="linkInfo">Working on a video? Bring its script over from <b>Content and Video Studio</b>.</span>
+  <button class="btn small" id="importVS">Import from Video Studio</button>
+  <button class="btn small" id="sendVS" hidden>Send to Video Studio</button>
+  <button class="btn small ghost" id="unlinkVS" hidden>Unlink</button>
+</div>
 
 <div class="layout">
   <nav class="rail" aria-label="Steps">
@@ -344,6 +359,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px soli
       <div class="block">
         <h3><span class="tag">C</span> Paste the versions here to keep them</h3>
         <textarea class="tall" data-bind="adapted" aria-label="Platform versions" placeholder="Paste the platform versions…"></textarea>
+        <p class="hint" id="capFound" style="margin-top:8px"></p>
       </div>
 
       <div class="btns"><button class="btn" data-next="3">← Back</button><button class="btn" id="skip4">Skip</button><button class="btn primary" data-next="5">Next: score it →</button></div>
@@ -383,6 +399,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px soli
         <p style="margin:6px 0 12px">Copy your final draft, post it, then start the next one. Your voice profile stays saved.</p>
         <div class="btns" style="margin-top:0">
           <button class="btn primary" id="copyFinal">Copy final draft</button>
+          <button class="btn" id="sendVS2">Send to Video Studio</button>
           <button class="btn" id="newPost2">Start a new post</button>
         </div>
       </div>
@@ -396,6 +413,14 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px soli
     </footer>
   </main>
 </div>
+
+<dialog id="pasteDlg" aria-labelledby="pasteH">
+  <h3 id="pasteH">Import from Video Studio</h3>
+  <p class="hint">In Video Studio, open the video and click <b>Polish in Tone Studio</b>. Then paste here (⌘V / Ctrl+V).</p>
+  <textarea id="pasteBox" aria-label="Pasted card" placeholder="VIDEO-STUDIO-CARD v1 …"></textarea>
+  <p class="note bad" id="pasteErr" hidden>That isn't from Video Studio. Click “Polish in Tone Studio” there first.</p>
+  <div class="btns"><button class="btn primary" id="pasteOk">Import</button><button class="btn" id="pasteCancel">Cancel</button></div>
+</dialog>
 
 <div class="toast" id="toast" role="status" hidden></div>
 
@@ -413,7 +438,8 @@ const blank = () => ({
   draft: "", prevDraft: "", pasteEdited: "",
   stripped: false,
   platforms: ["LinkedIn"], adapted: "", skipped4: false,
-  overall: "", scoreOut: ""
+  overall: "", scoreOut: "",
+  link: null
 });
 let S = blank();
 try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); S.w = Object.assign(blank().w, S.w); } catch (e) {}
@@ -492,6 +518,10 @@ Rules:
 
 Give me ONE draft. Then, under it, list any place where you weren't sure what I'd say.`;
 
+const videoRules = () => !S.link ? "" : `
+- This is a short-form video script, written to be said out loud: contractions, short sentences, no lists.
+- Keep the paragraph breaks.${S.link.hasHook ? "\n- The first paragraph is the hook, said in the first 2 seconds: keep it first and under 12 words." : ""}${S.link.hasCta ? "\n- The last paragraph is the call to action: keep it last." : ""}`;
+
 const P2rewrite = () => `Rewrite the draft below so it sounds like me.
 
 MY VOICE PROFILE:
@@ -504,7 +534,7 @@ Rules:
 - Keep every fact, number, name and claim exactly as it is. Change how it's said, not what is said.
 - Cut anything that doesn't earn its place. My version can be shorter.
 - Follow every DO / DON'T rule in my voice profile.
-- Don't add new ideas.
+- Don't add new ideas.${videoRules()}
 
 Return:
 1. The rewrite.
@@ -565,6 +595,12 @@ const PLATFORM_RULES = {
   "Instagram": `INSTAGRAM CAPTION
 - First line works as a hook in the preview (under 125 characters).
 - 50–150 words. Up to 5 relevant hashtags at the end.`,
+  "TikTok": `TIKTOK CAPTION
+- Under 150 characters. Adds to the video instead of repeating the first line.
+- 3–5 specific hashtags at the end.`,
+  "YouTube Shorts": `YOUTUBE SHORTS
+- Title: under 60 characters, specific, no clickbait.
+- Description: 1–2 sentences, then up to 3 hashtags.`,
   "Email / newsletter": `EMAIL / NEWSLETTER
 - Subject line: under 45 characters, specific, no clickbait. Give 3 options.
 - Preview text: under 90 characters, adds to the subject instead of repeating it.
@@ -907,6 +943,7 @@ document.addEventListener("input", e => {
     set(el.dataset.bind, el.value);
     if (el.dataset.bind === "draft") { S.stripped = false; $$('[data-bind="draft"]').forEach(o => { if (o !== el) o.value = el.value; }); if (S.step === 3) renderChecker(); }
     if (el.dataset.bind === "overall") renderOverall();
+    if (el.dataset.bind === "adapted") renderLink();
   }
   if (el.dataset.sample != null) { S.samples[+el.dataset.sample] = el.value; sampleMeta(); const m = el.parentElement.querySelector(".meta span"); if (m) m.textContent = words(el.value) + " words"; }
   if (el.closest("#platforms")) { S.platforms = $$("#platforms input:checked").map(i => i.value); }
@@ -954,6 +991,15 @@ document.addEventListener("click", async e => {
       if (!confirm("Erase everything, including your voice profile and samples? This can't be undone. Download your voice kit first if you want to keep it.")) break;
       S = blank(); try { localStorage.removeItem(KEY); } catch (e) {} renderAll(); go(1); break;
     case "exportBtn": case "exportBtn2": exportKit(); break;
+    case "importVS": importFromVS(); break;
+    case "sendVS": case "sendVS2": sendToVS(); break;
+    case "unlinkVS": S.link = null; save(); renderLink(); toast("Unlinked. Your draft stays."); break;
+    case "pasteCancel": $("#pasteDlg").close ? $("#pasteDlg").close() : $("#pasteDlg").removeAttribute("open"); break;
+    case "pasteOk": {
+      const c = readCard($("#pasteBox").value, CARD_IN);
+      if (!c) { $("#pasteErr").hidden = false; break; }
+      const d = $("#pasteDlg"); d.close ? d.close() : d.removeAttribute("open"); importCard(c); break;
+    }
   }
 });
 
@@ -971,7 +1017,70 @@ function exportKit() {
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-function renderAll() { renderSamples(); renderPlatforms(); renderMode(); syncBound(); renderUndo(); renderProgress(); renderOverall(); }
+/* ---------- Content and Video Studio hand-off ----------
+   The two tools run on different origins, so they swap a plain-text "card" through the clipboard:
+   a marker line, then JSON. Format: VIDEO-STUDIO.md. Nothing is sent anywhere. */
+const CARD_IN = "VIDEO-STUDIO-CARD v1", CARD_OUT = "TONE-STUDIO-CARD v1";
+const VS_KEYS = { "LinkedIn": "linkedin", "Instagram": "instagram", "TikTok": "tiktok", "YouTube Shorts": "youtube", "X / Threads": "x", "Email / newsletter": "substack" };
+const VS_NAMES = { linkedin: "LinkedIn", instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube Shorts", x: "X / Threads", substack: "Email / newsletter" };
+const HEAD = /^\s*(?:#{1,4}\s*|\*\*)?\s*(linkedin|instagram|tiktok|youtube(?: shorts)?|x(?:\s*\/\s*threads)?|threads|email|newsletter|substack|short video)\b[^\n]{0,60}$/i;
+function parseCaptions(text) {
+  const out = {}; let key = null, buf = [];
+  const flush = () => { const t = buf.join("\n").replace(/^\s*\*\*\s*$/gm, "").trim(); if (key && t) out[key] = (out[key] ? out[key] + "\n\n" : "") + t; buf = []; };
+  for (const line of (text || "").split("\n")) {
+    const m = line.match(HEAD);
+    if (m && line.trim().length <= 70) {
+      flush(); const w = m[1].toLowerCase();
+      key = w.startsWith("linkedin") ? "linkedin" : w.startsWith("instagram") ? "instagram" : w.startsWith("tiktok") ? "tiktok" : w.startsWith("youtube") ? "youtube"
+        : (w.startsWith("x") || w === "threads") ? "x" : (w === "email" || w === "newsletter" || w === "substack") ? "substack" : null;
+    } else buf.push(line);
+  }
+  flush(); return out;
+}
+function readCard(txt, marker) {
+  txt = String(txt || ""); const i = txt.indexOf(marker); if (i < 0) return null;
+  const j = txt.indexOf("{", i), k = txt.lastIndexOf("}"); if (j < 0 || k < j) return null;
+  try { const c = JSON.parse(txt.slice(j, k + 1)); return c && typeof c === "object" && c.v === 1 ? c : null; } catch (e) { return null; }
+}
+function importCard(c) {
+  const t = v => typeof v === "string" ? v.slice(0, 20000).trim() : "";
+  const body = [t(c.hook), t(c.script), t(c.cta)].filter(Boolean).join("\n\n");
+  if (!body) { toast("That video has no hook or script yet."); return false; }
+  if ((has(S.draft) || has(S.w.source) || has(S.w.notes)) && !confirm("Replace the post you're working on with this video? Your voice profile stays.")) return false;
+  const keep = { samples: S.samples, profile: S.profile };
+  S = Object.assign(blank(), keep);
+  S.link = { planId: typeof c.planId === "string" ? c.planId.slice(0, 40) : "", title: t(c.title) || "Untitled video", hasHook: !!t(c.hook), hasCta: !!t(c.cta) };
+  S.w.mode = "rewrite"; S.w.source = body; S.w.format = "short-form video script (Reels / TikTok / Shorts)"; S.w.audience = t(c.audience);
+  const plats = (Array.isArray(c.platforms) ? c.platforms : []).map(k => VS_NAMES[k]).filter(Boolean);
+  S.platforms = plats.length ? plats : ["LinkedIn", "Instagram", "TikTok", "YouTube Shorts"];
+  save(); renderAll(); go(2); toast(`Imported “${S.link.title}”. Copy the rewrite prompt in box B.`); return true;
+}
+async function importFromVS() {
+  let c = null;
+  try { c = readCard(await navigator.clipboard.readText(), CARD_IN); } catch (e) {}
+  if (c) return importCard(c);
+  const d = $("#pasteDlg"); $("#pasteBox").value = ""; $("#pasteErr").hidden = true;
+  if (d.showModal) d.showModal(); else d.setAttribute("open", ""); $("#pasteBox").focus();
+}
+async function sendToVS() {
+  if (!has(S.draft) && !has(S.adapted)) { toast("Nothing to send yet. Add a draft in step 2."); return; }
+  const caps = {}; const parsed = parseCaptions(S.adapted);
+  Object.values(VS_KEYS).forEach(k => { if (parsed[k]) caps[k] = parsed[k]; });
+  const card = { v: 1, planId: S.link?.planId || "", title: S.link?.title || "", script: S.draft.trim(), hasHook: !!S.link?.hasHook, hasCta: !!S.link?.hasCta,
+    captions: caps, voiceProfile: S.profile.trim() };
+  const ok = await copy(CARD_OUT + "\n" + JSON.stringify(card));
+  toast(ok ? "Copied. In Video Studio, open the video and click “Paste from Tone Studio”." : "Couldn't copy automatically.");
+}
+function renderLink() {
+  const bar = $("#linkbar"), l = S.link;
+  bar.classList.toggle("linked", !!l);
+  $("#linkInfo").innerHTML = l ? `Linked to Video Studio: <b>${esc(l.title)}</b>` : "Working on a video? Bring its script over from <b>Content and Video Studio</b>.";
+  $("#sendVS").hidden = !l; $("#unlinkVS").hidden = !l; $("#sendVS2").hidden = false;
+  const caps = parseCaptions(S.adapted), names = Object.keys(caps).map(k => VS_NAMES[k]);
+  $("#capFound").textContent = has(S.adapted) ? (names.length ? `Found captions for ${names.join(", ")}. “Send to Video Studio” puts each on its platform.` : "No platform headings found, so only the draft will be sent to Video Studio.") : "";
+}
+
+function renderAll() { renderSamples(); renderPlatforms(); renderMode(); syncBound(); renderUndo(); renderProgress(); renderOverall(); renderLink(); }
 renderAll();
 go(S.step || 1, false);
 })();

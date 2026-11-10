@@ -19,6 +19,8 @@ The fix isn't one magic prompt. It's a short workflow: **capture your voice once
 - **Instant AI-tell check:** it highlights giveaway words and patterns in your draft and gives it a 0–100 human score, with no AI needed.
 - It keeps your draft, platform versions and score together, and you can download it all as one "voice kit" file.
 
+**Works with [Content and Video Studio](https://github.com/rcinmarketing/content-planning-and-editing).** Send a video's script over with one click, polish it here, then send the script and a caption for each platform back. See [how the two connect](VIDEO-STUDIO.md).
+
 To run it, download this repo (green **Code** button → **Download ZIP**) and double-click `index.html`. There's nothing to install, and nothing you type leaves your browser.
 
 ## The workflow
