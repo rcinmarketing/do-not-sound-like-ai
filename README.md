@@ -10,6 +10,17 @@ You ask an AI to write a LinkedIn post and you get "In today's fast-paced world�
 
 The fix isn't one magic prompt. It's a short workflow: **capture your voice once, write with it every time, then check the draft for AI tells before you post.**
 
+## Use the dashboard (easiest)
+
+**[Tone of Voice Studio](index.html)** takes you through all five steps in one page:
+
+- It fills each prompt with your own samples, notes and draft, ready to copy into Claude, ChatGPT or Gemini.
+- It saves your voice profile, so every later prompt already includes it.
+- **Instant AI-tell check:** it highlights giveaway words and patterns in your draft and gives it a 0–100 human score, with no AI needed.
+- It keeps your draft, platform versions and score together, and you can download it all as one "voice kit" file.
+
+To run it, download this repo (green **Code** button → **Download ZIP**) and double-click `index.html`. There's nothing to install, and nothing you type leaves your browser.
+
 ## The workflow
 
 | Step | Prompt | What you get | Time |
