@@ -4,7 +4,7 @@ None of these words is banned in itself. The problem is density: five of them in
 
 ## Strict writing constraints
 
-Sounds Like Me and the Claude skill apply these to every draft:
+Sound Like Me and the Claude skill apply these to every draft:
 
 1. **No rhetorical pivots.** Absolutely no "It's not X, it's Y" phrasing. No rhetorical questions used as dramatic transitions ("If X happens, what survives?").
 2. **Narrative congruence.** A continuous, logical flow. No abrupt switches from long, complex sentences to one-word or short-fragment "punchlines".
