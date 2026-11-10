@@ -4,12 +4,14 @@
 
 **You need:** 3–5 pieces of your own writing (about 800+ words in total). Pick ones you're proud of and that weren't heavily edited by someone else or by AI. Mixing types helps: a post, an email, a talk transcript, a voice note you transcribed.
 
+**Optional: your past videos.** Videos show how you *talk*, which is often closer to your real voice. Add their links in the last section of the prompt, and paste what you said too (see the tips below).
+
 ---
 
 ```text
 You are a linguist and editor. Your job is to describe how one specific person writes, so precisely that another writer could imitate them and a close friend wouldn't notice.
 
-Below are samples of my writing. Analyze ONLY what is actually in them. Do not describe what good writing in general looks like, and do not flatter me.
+Below are samples of my writing (and, if included, my past video posts). Analyze ONLY what is actually in them. Do not describe what good writing in general looks like, and do not flatter me.
 
 Produce a VOICE PROFILE with these sections:
 
@@ -56,12 +58,21 @@ MY WRITING SAMPLES:
 
 --- SAMPLE 3 ---
 {{paste sample}}
+
+MY PAST VIDEO POSTS (optional, delete this section if you have none):
+These show how I talk, not just how I write. Where I pasted what I said, use that text. For a link without text, open it only if you can browse the web, and use the caption and the spoken words. If you can't open a link or can't access what was said in the video, list it under "Couldn't read" at the end of the profile and don't guess its content. If my spoken voice and my written voice differ, describe both in the profile.
+
+--- VIDEO 1 ---
+Link: {{https://…}}
+What I said / caption:
+{{paste the transcript or auto-captions, and the caption you posted}}
 ```
 
 ---
 
 ### Tips
 
+- **Paste the transcript, not just the link.** Most AI chats can't open LinkedIn, TikTok or Instagram links, and none reliably watch videos. Copy the words from YouTube (**…more → Show transcript**), from your editor's auto-captions, or from your script, if you didn't stray from it much.
 - **Read the profile and correct it.** If it says "uses humor often" and you don't, delete that. You know your voice better than the model does.
 - **Redo it every few months**, or when your writing changes (new job, new audience).
 - **Have more than one voice?** Make a profile for each one, e.g. *LinkedIn me* and *client email me*.

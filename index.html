@@ -73,11 +73,19 @@ h2,h3{margin:0}
 
 label{display:block;font-weight:500;font-size:12.5px;color:var(--muted);margin:12px 0 5px}
 label .opt{color:var(--faint)}
-input[type=text],textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;outline:none;font-size:14.5px;line-height:1.45}
+input[type=text],input[type=url],textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;outline:none;font-size:14.5px;line-height:1.45}
 textarea{min-height:110px;resize:vertical}
 textarea.tall{min-height:200px}
 input:focus,textarea:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.opt-h{font-size:12px;font-weight:500;color:var(--faint)}
+.linkrow{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--panel)}
+.linkrow + .linkrow{margin-top:10px}
+.lr-top{display:flex;gap:8px;align-items:center}
+.lr-top input{flex:1;min-width:0}
+.plat{font-size:12px;font-weight:600;padding:3px 9px;border-radius:20px;background:var(--panel3);color:var(--muted);white-space:nowrap}
+.plat.bad{background:rgba(208,33,63,.1);color:var(--danger)}
+.linkrow textarea{margin-top:8px;min-height:80px}
 .meta{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--faint);margin-top:5px;font-variant-numeric:tabular-nums}
 
 .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
@@ -201,7 +209,7 @@ footer.credit a:hover{text-decoration:underline}
     <section class="panel" data-step="1" aria-labelledby="h1">
       <div class="panel-head"><span class="n c1">STEP 1 OF 5</span></div>
       <h2 id="h1">Build your voice profile</h2>
-      <p class="lede">Paste 3–5 things you've written and are proud of: posts, emails, a talk transcript. About 800 words in total. The AI turns them into rules and examples you'll reuse every time you write.</p>
+      <p class="lede">Paste 3–5 things you've written and are proud of, and add links to past videos that sound like you. About 800 words in total. The AI turns them into rules and examples you'll reuse every time you write.</p>
 
       <div class="block">
         <h3><span class="tag">A</span> Your writing samples</h3>
@@ -214,8 +222,17 @@ footer.credit a:hover{text-decoration:underline}
       </div>
 
       <div class="block">
-        <h3><span class="tag">B</span> Copy the prompt into your AI</h3>
-        <p class="hint">Your samples are already inside the prompt.</p>
+        <h3><span class="tag">B</span> Links to your past video posts <span class="opt-h">optional</span></h3>
+        <p class="hint">Videos show how you <em>talk</em>, which is often closer to your real voice than how you write. Most AI chats can't open LinkedIn, TikTok or Instagram links or watch videos, so also paste what you said: the transcript or auto-captions, plus the caption you posted.</p>
+        <div id="links"></div>
+        <div class="btns">
+          <button class="btn small" id="addLink">+ Add a link</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3><span class="tag">C</span> Copy the prompt into your AI</h3>
+        <p class="hint">Your samples and links are already inside the prompt.</p>
         <div class="btns">
           <button class="btn primary" data-copy="p1">Copy prompt</button>
           <a class="btn small ghost" href="prompts/01-build-your-voice-profile.md" target="_blank" rel="noopener">See the prompt</a>
@@ -224,7 +241,7 @@ footer.credit a:hover{text-decoration:underline}
       </div>
 
       <div class="block">
-        <h3><span class="tag">C</span> Paste your voice profile back here</h3>
+        <h3><span class="tag">D</span> Paste your voice profile back here</h3>
         <p class="hint">Read it and correct anything that isn't you. It's saved in this browser and added to every prompt after this. Tip: also put it in a Claude Project, Custom GPT or Gem.</p>
         <textarea class="tall" data-bind="profile" aria-label="Voice profile" placeholder="Paste the voice profile your AI wrote…"></textarea>
         <div class="btns">
@@ -425,6 +442,7 @@ const KEY = "tov-studio.v1";
 const blank = () => ({
   step: 1,
   samples: ["", "", ""],
+  links: [],
   profile: "",
   w: { mode: "notes", format: "", length: "", audience: "", goal: "", notes: "", source: "" },
   draft: "", prevDraft: "", pasteEdited: "",
@@ -434,7 +452,7 @@ const blank = () => ({
   link: null
 });
 let S = blank();
-try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); S.w = Object.assign(blank().w, S.w); } catch (e) {}
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(blank(), JSON.parse(raw)); S.w = Object.assign(blank().w, S.w); S.links = (Array.isArray(S.links) ? S.links : []).filter(l => l && typeof l === "object").map(l => ({ url: String(l.url || ""), text: String(l.text || "") })).slice(0, 10); } catch (e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -449,7 +467,7 @@ const profileBlock = () => has(S.profile) ? S.profile.trim() : "{{paste voice pr
 
 const P1 = () => `You are a linguist and editor. Your job is to describe how one specific person writes, so precisely that another writer could imitate them and a close friend wouldn't notice.
 
-Below are samples of my writing. Analyze ONLY what is actually in them. Do not describe what good writing in general looks like, and do not flatter me.
+Below are samples of my writing${usableLinks().length ? " and my past video posts" : ""}. Analyze ONLY what is actually in them. Do not describe what good writing in general looks like, and do not flatter me.
 
 Produce a VOICE PROFILE with these sections:
 
@@ -486,8 +504,16 @@ Produce a VOICE PROFILE with these sections:
 
 Keep the whole profile under 600 words. Write it in plain markdown so I can save it and paste it into future chats.
 
-MY WRITING SAMPLES:
-${S.samples.filter(has).map((s, i) => `\n--- SAMPLE ${i + 1} ---\n${s.trim()}`).join("\n")}`;
+${S.samples.some(has) ? `MY WRITING SAMPLES:
+${S.samples.filter(has).map((s, i) => `\n--- SAMPLE ${i + 1} ---\n${s.trim()}`).join("\n")}` : ""}${videoBlock()}`;
+function videoBlock() {
+  const L = usableLinks(); if (!L.length) return "";
+  return `
+
+MY PAST VIDEO POSTS:
+These show how I talk, not just how I write. Where I pasted what I said, use that text. For a link without text, open it only if you can browse the web, and use the caption and the spoken words. If you can't open a link or can't access what was said in the video, list it under "Couldn't read" at the end of the profile and don't guess its content. If my spoken voice and my written voice differ, describe both in the profile.
+${L.map((l, i) => `\n--- VIDEO ${i + 1}${l.info.ok ? ` (${l.info.label})` : ""} ---${l.info.ok ? `\nLink: ${l.info.url}` : ""}${has(l.text) ? `\nWhat I said / caption:\n${l.text.trim()}` : "\nWhat I said: not pasted, open the link."}`).join("\n")}`;
+}
 
 const P2notes = () => `Write a ${S.w.format.trim() || "{{format}}"} in my voice.
 
@@ -685,10 +711,14 @@ I write for {{who}}. They already know {{what}}. They don't need {{what to skip}
 /* ---------- prompt readiness checks ---------- */
 const checks = {
   p1: () => {
-    const n = S.samples.filter(has).length, w = S.samples.reduce((a, s) => a + words(s), 0);
-    if (!n) return ["bad", "Add at least one writing sample first."];
-    if (n < 3 || w < 800) return ["warn", `Copied with ${n} sample${n > 1 ? "s" : ""} (${w} words). The profile gets much better with 3+ samples and 800+ words.`];
-    return ["ok", `Copied with ${n} samples (${w} words). Paste it into your AI, then paste the profile into box C.`];
+    const n = S.samples.filter(has).length, L = usableLinks(), k = L.length, bare = L.filter(l => !has(l.text)).length;
+    const w = S.samples.reduce((a, s) => a + words(s), 0) + S.links.reduce((a, l) => a + words(l.text), 0);
+    if (!n && !k) return ["bad", "Add at least one writing sample or video link first."];
+    if (S.links.some(l => has(l.url) && !linkInfo(l.url).ok && !has(l.text))) return ["bad", "One of your links isn't a valid web address. Fix it or remove it."];
+    const what = [n && `${n} sample${n > 1 ? "s" : ""}`, k && `${k} video link${k > 1 ? "s" : ""}`].filter(Boolean).join(" and ");
+    if (bare) return ["warn", `Copied with ${what} (${w} words). ${bare} link${bare > 1 ? "s have" : " has"} no transcript: most AI chats can't open social links or watch videos, so it may list ${bare > 1 ? "them" : "it"} as "Couldn't read". Paste what you said for a better profile.`];
+    if (n + k < 3 || w < 800) return ["warn", `Copied with ${what} (${w} words). The profile gets much better with 3+ pieces and 800+ words.`];
+    return ["ok", `Copied with ${what} (${w} words). Paste it into your AI, then paste the profile into box D.`];
   },
   p2: () => {
     const notes = S.w.mode === "notes";
@@ -859,6 +889,32 @@ function renderChecker() {
     : '<li><b>No common tells found.</b><br><span class="fix">Still run step 5 to check it sounds like you.</span></li>';
 }
 
+/* ---------- past video links ---------- */
+const PLATS = [[/(^|\.)linkedin\.com$/, "LinkedIn"], [/(^|\.)tiktok\.com$/, "TikTok"], [/(^|\.)instagram\.com$/, "Instagram"],
+  [/(^|\.)(youtube\.com|youtu\.be)$/, "YouTube"], [/(^|\.)(x\.com|twitter\.com)$/, "X"], [/(^|\.)threads\.(net|com)$/, "Threads"],
+  [/(^|\.)facebook\.com$/, "Facebook"], [/(^|\.)substack\.com$/, "Substack"]];
+function linkInfo(u) {
+  u = (u || "").trim(); if (!u) return { ok: false, label: "" };
+  let url; try { url = new URL(/^https?:\/\//i.test(u) ? u : "https://" + u); } catch (e) { return { ok: false, label: "Not a link" }; }
+  if (!/^https?:$/.test(url.protocol) || !url.hostname.includes(".")) return { ok: false, label: "Not a link" };
+  const host = url.hostname.replace(/^www\.|^m\./, "");
+  const hit = PLATS.find(([re]) => re.test(host));
+  return { ok: true, url: url.href, label: hit ? hit[1] : host };
+}
+const usableLinks = () => S.links.map(l => ({ ...l, info: linkInfo(l.url) })).filter(l => l.info.ok || has(l.text));
+function renderLinks() {
+  $("#links").innerHTML = S.links.map((l, i) => { const inf = linkInfo(l.url); return `
+    <div class="linkrow">
+      <div class="lr-top">
+        <input type="url" data-link-url="${i}" value="${esc(l.url)}" placeholder="https://www.tiktok.com/@you/video/…" aria-label="Link ${i + 1}">
+        <span class="plat${inf.label && !inf.ok ? " bad" : ""}" data-plat="${i}"${inf.label ? "" : " hidden"}>${esc(inf.label)}</span>
+        <button class="btn small ghost" data-del-link="${i}" aria-label="Remove link ${i + 1}">Remove</button>
+      </div>
+      <textarea data-link-text="${i}" aria-label="What you said in video ${i + 1}" placeholder="What you said in it: paste the transcript or auto-captions, and the caption you posted (recommended)">${esc(l.text)}</textarea>
+    </div>`; }).join("") || '<p class="hint" style="margin:0">No links yet.</p>';
+  $("#addLink").disabled = S.links.length >= 10;
+}
+
 /* ---------- samples ---------- */
 function renderSamples() {
   const box = $("#samples");
@@ -872,8 +928,9 @@ function renderSamples() {
   sampleMeta();
 }
 function sampleMeta() {
-  const w = S.samples.reduce((a, s) => a + words(s), 0);
-  $("#sampleWords").textContent = `${w} words across ${S.samples.filter(has).length} sample${S.samples.filter(has).length === 1 ? "" : "s"}`;
+  const w = S.samples.reduce((a, s) => a + words(s), 0) + S.links.reduce((a, l) => a + words(l.text), 0);
+  const n = S.samples.filter(has).length, k = usableLinks().length;
+  $("#sampleWords").textContent = `${w} words across ${n} sample${n === 1 ? "" : "s"}${k ? ` and ${k} video link${k === 1 ? "" : "s"}` : ""}`;
   $("#sampleGoal").textContent = w >= 800 ? "Goal reached ✓" : `Goal: 800+ (${800 - w} to go)`;
 }
 
@@ -938,6 +995,11 @@ document.addEventListener("input", e => {
     if (el.dataset.bind === "adapted") renderLink();
   }
   if (el.dataset.sample != null) { S.samples[+el.dataset.sample] = el.value; sampleMeta(); const m = el.parentElement.querySelector(".meta span"); if (m) m.textContent = words(el.value) + " words"; }
+  if (el.dataset.linkUrl != null) {
+    const i = +el.dataset.linkUrl; S.links[i].url = el.value; const inf = linkInfo(el.value), tag = $(`[data-plat="${i}"]`);
+    tag.hidden = !inf.label; tag.textContent = inf.label; tag.classList.toggle("bad", !!inf.label && !inf.ok); sampleMeta();
+  }
+  if (el.dataset.linkText != null) { S.links[+el.dataset.linkText].text = el.value; sampleMeta(); }
   if (el.closest("#platforms")) { S.platforms = $$("#platforms input:checked").map(i => i.value); }
   save(); renderProgress();
 });
@@ -947,6 +1009,7 @@ document.addEventListener("click", async e => {
   if (b.dataset.go) return go(+b.dataset.go);
   if (b.dataset.next) return go(+b.dataset.next);
   if (b.dataset.mode) { S.w.mode = b.dataset.mode; save(); return renderMode(); }
+  if (b.dataset.delLink != null) { S.links.splice(+b.dataset.delLink, 1); save(); renderLinks(); sampleMeta(); return; }
   if (b.dataset.delSample != null) { S.samples.splice(+b.dataset.delSample, 1); save(); return renderSamples(); }
   if (b.dataset.copy) {
     const k = b.dataset.copy, [lvl, msg] = checks[k](), note = $(`#${k}note`);
@@ -957,6 +1020,7 @@ document.addEventListener("click", async e => {
     return;
   }
   switch (b.id) {
+    case "addLink": if (S.links.length < 10) { S.links.push({ url: "", text: "" }); save(); renderLinks(); $(`[data-link-url="${S.links.length - 1}"]`).focus(); } break;
     case "addSample": if (S.samples.length < 5) { S.samples.push(""); save(); renderSamples(); $(`#s${S.samples.length - 1}`).focus(); } break;
     case "useTemplate":
       if (has(S.profile) && !confirm("Replace your current voice profile with the blank template?")) break;
@@ -977,7 +1041,7 @@ document.addEventListener("click", async e => {
     case "copyFinal": toast((await copy(S.draft)) ? "Final draft copied." : "Couldn't copy automatically."); break;
     case "newPostBtn": case "newPost2":
       if (!confirm("Start a new post? Your voice profile stays; the current draft, versions and score are cleared.")) break;
-      { const keep = { samples: S.samples, profile: S.profile, platforms: S.platforms }; S = Object.assign(blank(), keep); S.w.mode = "notes"; save(); syncBound(); renderAll(); go(2); }
+      { const keep = { samples: S.samples, links: S.links, profile: S.profile, platforms: S.platforms }; S = Object.assign(blank(), keep); S.w.mode = "notes"; save(); syncBound(); renderAll(); go(2); }
       break;
     case "resetBtn":
       if (!confirm("Erase everything, including your voice profile and samples? This can't be undone. Download your voice kit first if you want to keep it.")) break;
@@ -1004,6 +1068,8 @@ function exportKit() {
   if (has(S.adapted)) parts.push("## Platform versions", "", S.adapted.trim(), "");
   if (has(S.scoreOut)) parts.push("## Scorecard", "", S.scoreOut.trim(), "");
   parts.push("## Writing samples", "", ...S.samples.filter(has).map((s, i) => `### Sample ${i + 1}\n\n${s.trim()}\n`));
+  const L = usableLinks();
+  if (L.length) parts.push("## Past video posts", "", ...L.map((l, i) => `### Video ${i + 1}${l.info.ok ? ` (${l.info.label})\n\n${l.info.url}` : ""}\n\n${l.text.trim() || "_No transcript pasted._"}\n`));
   const blob = new Blob([parts.join("\n")], { type: "text/markdown" });
   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "my-voice-kit.md";
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
@@ -1039,7 +1105,7 @@ function importCard(c) {
   const body = [t(c.hook), t(c.script), t(c.cta)].filter(Boolean).join("\n\n");
   if (!body) { toast("That video has no hook or script yet."); return false; }
   if ((has(S.draft) || has(S.w.source) || has(S.w.notes)) && !confirm("Replace the post you're working on with this video? Your voice profile stays.")) return false;
-  const keep = { samples: S.samples, profile: S.profile };
+  const keep = { samples: S.samples, links: S.links, profile: S.profile };
   S = Object.assign(blank(), keep);
   S.link = { planId: typeof c.planId === "string" ? c.planId.slice(0, 40) : "", title: t(c.title) || "Untitled video", hasHook: !!t(c.hook), hasCta: !!t(c.cta) };
   S.w.mode = "rewrite"; S.w.source = body; S.w.format = "short-form video script (Reels / TikTok / Shorts)"; S.w.audience = t(c.audience);
@@ -1072,7 +1138,7 @@ function renderLink() {
   $("#capFound").textContent = has(S.adapted) ? (names.length ? `Found captions for ${names.join(", ")}. “Send to Video Studio” puts each on its platform.` : "No platform headings found, so only the draft will be sent to Video Studio.") : "";
 }
 
-function renderAll() { renderSamples(); renderPlatforms(); renderMode(); syncBound(); renderUndo(); renderProgress(); renderOverall(); renderLink(); }
+function renderAll() { renderSamples(); renderLinks(); sampleMeta(); renderPlatforms(); renderMode(); syncBound(); renderUndo(); renderProgress(); renderOverall(); renderLink(); }
 renderAll();
 go(S.step || 1, false);
 })();
