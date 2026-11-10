@@ -282,6 +282,8 @@ footer.credit .follow a:hover{color:var(--pink)}
       <div class="block">
         <label for="fPoint" style="margin-top:0">Your point</label>
         <textarea id="fPoint" class="tall" data-bind="w.point" placeholder="e.g. I stopped letting AI write my posts. My comments doubled, because people could finally hear me in them."></textarea>
+        <label for="fExtra">Additional notes <span class="opt">(optional)</span></label>
+        <textarea id="fExtra" data-bind="w.extra" placeholder="Anything to include or avoid, e.g. add my socials: @rcinmarketing on Instagram and TikTok. Mention the free guide at the end. Don't name the client."></textarea>
         <details id="srcBox" style="margin-top:14px">
           <summary class="hint" style="cursor:pointer;margin:0">Already have a draft or script? Add it (optional)</summary>
           <textarea data-bind="w.source" aria-label="Existing draft" style="margin-top:8px" placeholder="Paste it here and Claude rewrites it in your voice, keeping your facts."></textarea>
@@ -382,7 +384,7 @@ const blank = () => ({
   samples: ["", "", ""],
   links: [],
   profile: "", profileMode: "pick", profileFrom: "", pick: {},
-  w: { point: "", format: "LinkedIn post", length: "Medium (100–200 words)", audience: "", source: "" },
+  w: { point: "", extra: "", format: "LinkedIn post", length: "Medium (100–200 words)", audience: "", source: "" },
   draft: "", prevDraft: "",
   stripped: false,
   platforms: ["LinkedIn"], adapted: "", skipped4: false,
@@ -701,9 +703,9 @@ async function claude(prompt) {
 /* Outside Claude: open a new Claude chat with the prompt ready to send. */
 async function openInClaude(prompt) {
   const full = `${SYSTEM}\n\n${prompt}`;
-  await copy(full);
   const url = "https://claude.ai/new?q=" + encodeURIComponent(full);
   const short = url.length < 7500;
+  if (short) { try { await navigator.clipboard.writeText(full); } catch (e) {} } else await copy(full);
   window.open(short ? url : "https://claude.ai/new", "_blank", "noopener");
   toast(short ? "Opened in Claude. Paste the reply back here." : "Prompt copied. Paste it into the new Claude chat.");
 }
@@ -733,6 +735,10 @@ const NO_SLOP = `It must read like a person wrote it, not AI. These strict writi
 - No openers about trends or "today's world". Start with the most specific thing I gave you.
 - No emojis as bullet points, no hashtag stacks, no bold text for emphasis, no more than one exclamation mark, no em-dash in every other sentence, no closing question unless my point is a question.
 - Before you answer, reread every line and rewrite any that breaks these rules.`;
+const notesBlock = () => has(S.w.extra) ? `ADDITIONAL NOTES (follow these; include exactly the links, handles and details given here, and if a note asks for something without the details, write [ASK: what's missing] instead of making it up):
+${S.w.extra.trim().slice(0, 4000)}
+
+` : "";
 const draftPrompt = () => {
   const src = S.w.source.trim();
   const fmt = S.link ? "short video script (Reels / TikTok / Shorts)" : "short post";
@@ -741,7 +747,7 @@ const draftPrompt = () => {
 MY VOICE PROFILE:
 ${has(S.profile) ? S.profile.trim() : DEFAULT_VOICE}
 
-${examplesBlock()}THE POINT I WANT TO MAKE:
+${examplesBlock()}${notesBlock()}THE POINT I WANT TO MAKE:
 ${S.w.point.trim() || "(See my draft.)"}
 ${src ? `\nMY DRAFT:\n${src}\n` : ""}
 FORMAT: ${S.link ? "Short video script, 30–60 seconds (75–150 words)." : "A post of about 100–200 words. Platform versions are made from it later, so don't format it for one platform."}
@@ -754,6 +760,7 @@ Return only the post text: no title, no preamble, no notes after it.`;
 const adaptPrompt = () => P4().replace("Return each version under a heading with its platform name and its word or character count.",
   "Return each version under a markdown heading with just its platform name (e.g. ## LinkedIn). Then the version text, nothing else: no counts, no notes, no preamble.")
   .replace("{{paste voice profile}}", DEFAULT_VOICE)
+  .replace("ORIGINAL PIECE:", `${notesBlock()}ORIGINAL PIECE:`)
   .replace("Rules for every version:", `Rules for every version:\n${NO_SLOP}`);
 const fixPrompt = () => P3().replace(/Return:\n1\. The edited draft\.\n2\. A table:[^\n]*\n/, "Return only the edited draft: no table, no notes, no preamble.\n");
 
