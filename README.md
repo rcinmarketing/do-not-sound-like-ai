@@ -1,4 +1,4 @@
-<h1 align="center">AI Tone of Voice Prompts</h1>
+<h1 align="center">Do not sound like AI</h1>
 
 <p align="center">Copy-paste prompts that make AI write like <b>you</b>, not like a press release.</p>
 
@@ -17,7 +17,7 @@ Tell Claude how you sound once, then just say what point you want to make. Claud
 **Claude Code:**
 
 ```
-/plugin marketplace add rcinmarketing/ai-tone-of-voice-prompts
+/plugin marketplace add rcinmarketing/do-not-sound-like-ai
 /plugin install tone-of-voice@rc-in-marketing
 ```
 

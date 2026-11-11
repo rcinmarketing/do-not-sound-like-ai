@@ -17,7 +17,7 @@ Nothing is uploaded at any point. Everything moves through your clipboard.
 
 ## Where Sound Like Me opens from
 
-By default, **Polish with Sound Like Me** opens `https://rcinmarketing.github.io/ai-tone-of-voice-prompts/`. If you run Sound Like Me somewhere else, set that address once in Video Studio's browser console:
+By default, **Polish with Sound Like Me** opens `https://rcinmarketing.github.io/do-not-sound-like-ai/`. If you run Sound Like Me somewhere else, set that address once in Video Studio's browser console:
 
 ```js
 localStorage.setItem('vs.toneUrl', JSON.stringify('http://127.0.0.1:8000/'))

@@ -1406,7 +1406,7 @@ document.addEventListener("click", async e => {
     case "dlDrafts": {
       if (!has(S.draft) && !has(S.adapted)) { toast("Nothing to download yet."); break; }
       const md = ["# " + (S.w.point.trim().split("\n")[0].slice(0, 80) || "My post"), "", "## Draft", "", S.draft.trim(), "", ...splitVersions(S.adapted).flatMap(v => ["## " + v.name, "", v.text, ""]),
-        "---", "Made with Sound Like Me by RC in Marketing: https://github.com/rcinmarketing/ai-tone-of-voice-prompts", ""].join("\n");
+        "---", "Made with Sound Like Me by RC in Marketing: https://github.com/rcinmarketing/do-not-sound-like-ai", ""].join("\n");
       if (await saveFile("my-post-drafts.md", md)) toast("Saved my-post-drafts.md.");
       break;
     }
@@ -1450,7 +1450,7 @@ async function exportKit() {
   if (ex.length) parts.push("## Examples of how I write", "", ...ex.map((t, i) => `### Example ${i + 1}\n\n${t.trim()}\n`));
   const L = usableLinks().filter(l => has(l.text));
   if (L.length) parts.push("## How I talk (video transcripts)", "", ...L.map((l, i) => `### Video ${i + 1}${l.info.ok ? ` (${l.info.url})` : ""}\n\n${l.text.trim()}\n`));
-  parts.push("---", "Made with Sound Like Me by RC in Marketing: https://github.com/rcinmarketing/ai-tone-of-voice-prompts", "");
+  parts.push("---", "Made with Sound Like Me by RC in Marketing: https://github.com/rcinmarketing/do-not-sound-like-ai", "");
   if (await saveFile("my-tone-of-voice.md", parts.join("\n"))) toast("Saved my-tone-of-voice.md. Add it to a Claude Project so Claude always writes like you.");
 }
 
